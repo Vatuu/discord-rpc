@@ -1,5 +1,4 @@
-.idea/**/workspace.xml
-.idea/**/uiDesigner.xml
-.idea/**/libraries
+.idea/
 target/
+discord-rpc.iml
 dependency-reduced-pom.xml
