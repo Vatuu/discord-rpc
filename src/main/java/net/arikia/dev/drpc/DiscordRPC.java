@@ -4,13 +4,12 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.SystemUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
@@ -82,10 +81,20 @@ public final class DiscordRPC{
 
     //Load DLL depending on the user's architecture.
     private static void loadDLL(){
-        boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
-        String name ="discord-rpc.dll";
-        String finalPath = is64bit ? "/lib/win64/" + name : "/lib/win32/" + name;
-        File f = new File(System.getenv("TEMP") + "/discord-rpc.jar/discord-rpc.dll");
+        String name = System.mapLibraryName("discord-rpc");
+        String finalPath = "";
+        String tempPath = "";
+
+        if(SystemUtils.IS_OS_WINDOWS){
+            boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
+            finalPath = is64bit ? "/lib/win64/discord-rpc.dll" : "/lib/win32/discord-rpc.dll";
+            tempPath = System.getenv("TEMP") + "/discord-rpc.jar/discord-rpc.dll";
+        }else if(SystemUtils.IS_OS_LINUX) {
+            finalPath = "/lib/lin64/discord-rpc.so";
+            tempPath = System.getenv("TMPDIR") + "/discord-rpc.jar/discord-rpc.so";
+        }
+
+        File f = new File(tempPath);
 
         try(InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = FileUtils.openOutputStream(f)){
             IOUtils.copy(in, out);
