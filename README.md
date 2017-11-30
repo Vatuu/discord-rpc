@@ -1,4 +1,6 @@
-![alt text](https://github.com/vatuu/discord-rpc/raw/master/rpc.png "Java Discord RPC")
+![Logo](https://github.com/vatuu/discord-rpc/raw/master/rpc.png "Java Discord RPC")
+
+[![jitpack](https://jitpack.io/v/Vatuu/discord-rpc.svg)](https://jitpack.io/#Vatuu/discord-rpc)
 
 # discord-rpc
 Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
@@ -25,7 +27,8 @@ Using this wrapper is as simple as it can be, with barely any difference of the 
 
 ### Step 0
   Download one of the releases or download the sources to build your own release. Then, simply add and include it in your project.
-  (Maven Support is Coming SoonTM)
+  
+  Currently supported OS include ``Windows x86``, ``Windows x64`` and ``Unix x64``. ``OSX`` and ``Unix x86`` will be added soon.
 
 ### Step 1
 Initialize the Discord RPC when your Application starts up. The Library is mostly static, so there is no need to create a Instance.
