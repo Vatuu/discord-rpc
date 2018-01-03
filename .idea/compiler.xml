@@ -9,12 +9,14 @@
         <module name="discord-rpc" />
         <module name="DiscordRPC" />
         <module name="my-native-bindings" />
+        <module name="RPCTest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="discord-rpc" target="1.8" />
       <module name="DiscordRPC" target="1.5" />
       <module name="my-native-bindings" target="1.5" />
+      <module name="RPCTest" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

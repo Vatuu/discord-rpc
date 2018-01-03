@@ -4,12 +4,19 @@
 	<groupId>net.arikia.dev</groupId>
 	<artifactId>discord-rpc</artifactId>
 	<name>DiscordRPC</name>
-	<version>0.9-BETA-2</version>
+	<version>0.9-BETA-3</version>
 	<packaging>jar</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -28,7 +35,11 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.github.Vatuu</groupId>
+			<artifactId>discord-rpc-binaries</artifactId>
+			<version>2.1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -55,7 +66,41 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.2</version>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+							<includeGroupIds>com.github.Vatuu</includeGroupIds>
+							<includeArtifactIds>discord-rpc-binaries</includeArtifactIds>
+							<exclideTransitive>true</exclideTransitive>
+							<overWrite>true</overWrite>
+							<outputDirectory>${project.build.directory}/binaries-resources</outputDirectory>
+							<exclude>org/**,META-INF/**</exclude>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+		<resources>
+			<resource>
+				<filtering>false</filtering>
+				<directory>${project.build.directory}/binaries-resources</directory>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>${basedir}/src/main/resources</directory>
+			</resource>
+		</resources>
 	</build>
 </project>
 

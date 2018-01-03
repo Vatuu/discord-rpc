@@ -29,6 +29,11 @@ public class DiscordJoinRequest extends Structure {
     public String username;
 
     /**
+     * The discriminator of the player asking to join.
+     */
+    public int discriminator;
+
+    /**
      * The avatar hash of the player asking to join.
      * @see <a href="https://discordapp.com/developers/docs/reference#image-formatting">Image Formatting</a>
      */
