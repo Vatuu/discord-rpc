@@ -4,7 +4,7 @@
 	<groupId>net.arikia.dev</groupId>
 	<artifactId>discord-rpc</artifactId>
 	<name>DiscordRPC</name>
-	<version>0.9-BETA-3</version>
+	<version>0.9-BETA-4</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -80,10 +80,7 @@
 						<configuration>
 							<includeGroupIds>com.github.Vatuu</includeGroupIds>
 							<includeArtifactIds>discord-rpc-binaries</includeArtifactIds>
-							<exclideTransitive>true</exclideTransitive>
-							<overWrite>true</overWrite>
 							<outputDirectory>${project.build.directory}/binaries-resources</outputDirectory>
-							<exclude>org/**,META-INF/**</exclude>
 							<overWriteReleases>true</overWriteReleases>
 							<overWriteSnapshots>true</overWriteSnapshots>
 						</configuration>

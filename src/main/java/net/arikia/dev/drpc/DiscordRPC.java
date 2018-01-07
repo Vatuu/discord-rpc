@@ -92,6 +92,9 @@ public final class DiscordRPC{
         }else if(SystemUtils.IS_OS_LINUX) {
             finalPath = "/linux/discord-rpc.so";
             tempPath = System.getenv("TMPDIR") + "/discord-rpc.jar/discord-rpc.so";
+        }else if(SystemUtils.IS_OS_MAC || SystemUtils.IS_OS_MAC_OSX){
+            finalPath = "/osx/discord-rpc.dylib";
+            tempPath = System.getenv("TMPDIR") + "/discord-rpc/discord-rpc.dylib";
         }
 
         File f = new File(tempPath);
