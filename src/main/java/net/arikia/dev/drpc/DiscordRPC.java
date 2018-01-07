@@ -29,7 +29,7 @@ public final class DiscordRPC{
      * @param handlers      EventHandlers
      * @param autoRegister  AutoRegister
      */
-    public static void DiscordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister){
+    public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister){
         DLL.INSTANCE.Discord_Initialize(applicationId, handlers, autoRegister ? 1 : 0, null);
     }
 
@@ -41,14 +41,14 @@ public final class DiscordRPC{
      * @param autoRegister  AutoRegister
      * @param steamId       SteamAppID
      */
-    public static void DiscordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister, String steamId){
+    public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister, String steamId){
         DLL.INSTANCE.Discord_Initialize(applicationId, handlers, autoRegister ? 1 : 0, steamId);
     }
 
     /**
      * Method to shutdown the Discord-RPC from within the application.
      */
-    public static void DiscordShutdown(){
+    public static void discordShutdown(){
         DLL.INSTANCE.Discord_Shutdown();
     }
 
@@ -56,7 +56,7 @@ public final class DiscordRPC{
      * Method to call Callbacks from within the library.
      * Must be called periodically.
      */
-    public static void DiscordRunCallbacks(){
+    public static void discordRunCallbacks(){
         DLL.INSTANCE.Discord_RunCallbacks();
     }
 
@@ -65,7 +65,7 @@ public final class DiscordRPC{
      * @param presence Instance of DiscordRichPresence
      *                 @see DiscordRichPresence
      */
-    public static void DiscordUpdatePresence(DiscordRichPresence presence){
+    public static void discordUpdatePresence(DiscordRichPresence presence){
         DLL.INSTANCE.Discord_UpdatePresence(presence);
     }
 
@@ -75,7 +75,7 @@ public final class DiscordRPC{
      * @param reply DiscordReply to request.
      *              @see DiscordReply
      */
-    public static void DiscordRespond(String userId, DiscordReply reply){
+    public static void discordRespond(String userId, DiscordReply reply){
         DLL.INSTANCE.Discord_Respond(userId, reply.reply);
     }
 
