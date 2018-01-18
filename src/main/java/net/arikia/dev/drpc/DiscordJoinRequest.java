@@ -2,6 +2,9 @@ package net.arikia.dev.drpc;
 
 import com.sun.jna.Structure;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Nicolas "Vatuu" Adamoglou
  * @version 1.0
@@ -17,6 +20,11 @@ public class DiscordJoinRequest extends Structure {
         const char* avatar;
     } DiscordJoinRequest;
     */
+
+    @Override
+    public List<String> getFieldOrder(){
+        return Arrays.asList(new String[] {"userId", "username", "discriminator", "avatar"});
+    }
 
     /**
      * The userId of the player asking to join.

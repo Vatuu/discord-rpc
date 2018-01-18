@@ -36,7 +36,7 @@ public final class DiscordRPC{
     /**
      * Method to initialize the Discord-RPC within a Steam Application.
      * @param applicationId ApplicationID/ClientID
-     * @param handlers      EventHandlers
+     * @param handlers      EventHandlersq
      *                      @see DiscordEventHandlers
      * @param autoRegister  AutoRegister
      * @param steamId       SteamAppID

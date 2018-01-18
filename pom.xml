@@ -4,7 +4,7 @@
 	<groupId>net.arikia.dev</groupId>
 	<artifactId>discord-rpc</artifactId>
 	<name>DiscordRPC</name>
-	<version>0.9-BETA-4</version>
+	<version>0.9-BETA-5</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
 			<artifactId>jna</artifactId>
-			<version>3.2.7</version>
+			<version>4.5.1</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
