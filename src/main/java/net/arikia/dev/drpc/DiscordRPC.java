@@ -69,6 +69,10 @@ public final class DiscordRPC{
         DLL.INSTANCE.Discord_UpdatePresence(presence);
     }
 
+    public static void discordClearPresence(){
+        DLL.INSTANCE.Discord_ClearPresence();
+    }
+
     /**
      * Method to respond to Join/Spectate Callback.
      * @param userId UserID of the user to respond to.
@@ -117,6 +121,7 @@ public final class DiscordRPC{
         void Discord_Shutdown();
         void Discord_RunCallbacks();
         void Discord_UpdatePresence(DiscordRichPresence presence);
+        void Discord_ClearPresence();
         void Discord_Respond(String userId, int reply);
     }
 }
