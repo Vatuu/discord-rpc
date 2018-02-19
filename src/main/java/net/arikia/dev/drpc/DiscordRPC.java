@@ -16,7 +16,7 @@ import java.io.OutputStream;
  * @version 1.0
  */
 
-public final class DiscordRPC{
+public final class DiscordRPC{w
 
     static { loadDLL(); }
 
