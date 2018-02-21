@@ -21,7 +21,7 @@ public final class DiscordRPC{
     static { loadDLL(); }
 
     //DLL-Version for Update Check.
-    private static final String DLL_VERSION = "2.2.0-PRE";
+    private static final String DLL_VERSION = "2.2.0-PRE.2";
 
     /**
      * Method to initialize the Discord-RPC.
