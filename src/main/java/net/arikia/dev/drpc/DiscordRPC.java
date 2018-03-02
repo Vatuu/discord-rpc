@@ -21,7 +21,7 @@ public final class DiscordRPC{
     static { loadDLL(); }
 
     //DLL-Version for Update Check.
-    private static final String DLL_VERSION = "2.2.0-PRE.2";
+    private static final String DLL_VERSION = "3.0.0";
 
     /**
      * Method to initialize the Discord-RPC.
@@ -47,7 +47,7 @@ public final class DiscordRPC{
     /**
      * Method to initialize the Discord-RPC within a Steam Application.
      * @param applicationId ApplicationID/ClientID
-     * @param handlers      EventHandlersq
+     * @param handlers      EventHandlers
      *                      @see DiscordEventHandlers
      * @param autoRegister  AutoRegister
      * @param steamId       SteamAppID
