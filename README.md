@@ -1,6 +1,6 @@
 ![Logo](https://github.com/vatuu/discord-rpc/raw/master/rpc.png "Java Discord RPC")
 
-[![jitpack](https://jitpack.io/v/Vatuu/discord-rpc.svg)](https://jitpack.io/#Vatuu/discord-rpc)
+[![jitpack](https://jitpack.io/v/Vatuu/discord-rpc.svg)](https://jitpack.io/#Vatuu/discord-rpc) [![Build Status](https://travis-ci.org/Vatuu/discord-rpc.svg?branch=master)](https://travis-ci.org/Vatuu/discord-rpc)
 
 # discord-rpc
 Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
