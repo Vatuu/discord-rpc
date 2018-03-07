@@ -1,6 +1,7 @@
 package net.arikia.dev.drpc;
 
 import com.sun.jna.Structure;
+import lombok.Data;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  *
  *
  */
+@Data
 public class DiscordRichPresence extends Structure {
 
     /*
@@ -40,74 +42,74 @@ public class DiscordRichPresence extends Structure {
     /**
      * State of the player's current party.
      */
-    public String state;
+    private String state;
 
     /**
      * Details to the current game-session of the player.
      */
-    public String details;
+    private String details;
     /**
      * unix timestamp for the start of the game
      */
-    public long startTimestamp;
+    private long startTimestamp;
 
     /**
      * Unix timestamp for when the game will end
      */
-    public long endTimestamp;
+    private long endTimestamp;
 
     /**
      * Name of the uploaded image for the large profile artwork.
      */
-    public String largeImageKey;
+    private String largeImageKey;
 
     /**
      * Tooltip for the largeImageKey
      */
-    public String largeImageText;
+    private String largeImageText;
 
     /**
      * Name of the uploaded image for the small profile artwork.
      */
-    public String smallImageKey;
+    private String smallImageKey;
 
     /**
      * Tooltip for the smallImageKey
      */
-    public String smallImageText;
+    private String smallImageText;
 
     /**
      * Id of the player's party, lobby, or group.
      */
-    public String partyId;
+    private String partyId;
 
     /**
      * Current size of the player's party, lobby, or group.
      */
-    public int partySize;
+    private int partySize;
 
     /**
      * Maximum size of the player's party, lobby, or group.
      */
-    public int partyMax;
+    private int partyMax;
 
     /**
      * Unique hashed string for Spectate and Join.
      */
-    public String matchSecret;
+    private String matchSecret;
 
     /**
      * Unique hashed string for Spectate button.
      */
-    public String spectateSecret;
+    private String spectateSecret;
 
     /**
      * Unique hashed string for chat invitations and Ask to Join.
      */
-    public String joinSecret;
+    private String joinSecret;
 
     /**
      * 	Marks the matchSecret as a game session with a specific beginning and end.
      */
-    public int instance;
+    private int instance;
 }
