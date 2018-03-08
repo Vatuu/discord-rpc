@@ -1,6 +1,9 @@
 package net.arikia.dev.drpc;
 
 import com.sun.jna.Structure;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import net.arikia.dev.drpc.callbacks.*;
 
 import java.util.Arrays;
@@ -12,7 +15,7 @@ import java.util.List;
  *
  *
  */
-
+@Data
 public class DiscordEventHandlers extends Structure {
 
     @Override
@@ -23,10 +26,10 @@ public class DiscordEventHandlers extends Structure {
     /**
      * Callback called when Discord-RPC was initialized successfully.
      */
-    public ReadyCallback ready;
-    public DisconnectedCallback disconnected;
-    public ErroredCallback errored;
-    public JoinGameCallback joinGame;
-    public SpectateGameCallback spectateGame;
-    public JoinRequestCallback joinRequest;
+    private ReadyCallback ready;
+    private DisconnectedCallback disconnected;
+    private ErroredCallback errored;
+    private JoinGameCallback joinGame;
+    private SpectateGameCallback spectateGame;
+    private JoinRequestCallback joinRequest;
 }
