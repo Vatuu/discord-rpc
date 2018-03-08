@@ -1,7 +1,6 @@
 package net.arikia.dev.drpc;
 
 import com.sun.jna.Structure;
-import lombok.Data;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.List;
  *
  *
  */
-@Data
 public class DiscordRichPresence extends Structure {
 
     /*
@@ -42,74 +40,74 @@ public class DiscordRichPresence extends Structure {
     /**
      * State of the player's current party.
      */
-    private String state;
+    public String state;
 
     /**
      * Details to the current game-session of the player.
      */
-    private String details;
+    public String details;
     /**
      * unix timestamp for the start of the game
      */
-    private long startTimestamp;
+    public long startTimestamp;
 
     /**
      * Unix timestamp for when the game will end
      */
-    private long endTimestamp;
+    public long endTimestamp;
 
     /**
      * Name of the uploaded image for the large profile artwork.
      */
-    private String largeImageKey;
+    public String largeImageKey;
 
     /**
      * Tooltip for the largeImageKey
      */
-    private String largeImageText;
+    public String largeImageText;
 
     /**
      * Name of the uploaded image for the small profile artwork.
      */
-    private String smallImageKey;
+    public String smallImageKey;
 
     /**
      * Tooltip for the smallImageKey
      */
-    private String smallImageText;
+    public String smallImageText;
 
     /**
      * Id of the player's party, lobby, or group.
      */
-    private String partyId;
+    public String partyId;
 
     /**
      * Current size of the player's party, lobby, or group.
      */
-    private int partySize;
+    public int partySize;
 
     /**
      * Maximum size of the player's party, lobby, or group.
      */
-    private int partyMax;
+    public int partyMax;
 
     /**
      * Unique hashed string for Spectate and Join.
      */
-    private String matchSecret;
+    public String matchSecret;
 
     /**
      * Unique hashed string for Spectate button.
      */
-    private String spectateSecret;
+    public String spectateSecret;
 
     /**
      * Unique hashed string for chat invitations and Ask to Join.
      */
-    private String joinSecret;
+    public String joinSecret;
 
     /**
      * 	Marks the matchSecret as a game session with a specific beginning and end.
      */
-    private int instance;
+    public int instance;
 }

@@ -39,8 +39,8 @@ public class Main{
                 System.out.println("Unknown Command.");
             }
             DiscordRichPresence rich = new DiscordRichPresence();
-            rich.setState("Running Test | Private");
-            rich.setDetails("Score = " + score);
+            rich.state = "Running Test | Private";
+            rich.details = "Score = " + score;
             DiscordRPC.discordUpdatePresence(rich);
             ready = true;
         }
@@ -67,7 +67,7 @@ public class Main{
 
     private static void initDiscord(){
         DiscordEventHandlers handlers = new DiscordEventHandlers();
-        handlers.setReady(new Ready());
+        handlers.ready = new Ready();
         DiscordRPC.discordInitialize("415885161457123338", handlers, true);
     }
 
@@ -75,8 +75,8 @@ public class Main{
         public void apply(){
             System.out.println("Ready.");
             DiscordRichPresence rich = new DiscordRichPresence();
-            rich.setState("Running Test | Private");
-            rich.setDetails("Score = 0");
+            rich.state = "Running Test | Private";
+            rich.details = "Score = 0";
             DiscordRPC.discordUpdatePresence(rich);
             ready = true;
         }
