@@ -21,7 +21,7 @@ public final class DiscordRPC{
     static { loadDLL(); }
 
     //DLL-Version for Update Check.
-    private static final String DLL_VERSION = "3.0.0";
+    private static final String DLL_VERSION = "3.1.0";
 
     /**
      * Method to initialize the Discord-RPC.
@@ -65,6 +65,15 @@ public final class DiscordRPC{
      */
     public static void discordRegisterSteam(String applicationId, String steamId){
         DLL.INSTANCE.Discord_RegisterSteamGame(applicationId, steamId);
+    }
+
+    /**
+     * Method to update the registered EventHandlers, after the initialization was
+     * already called.
+     * @param handlers DiscordEventHandler object with updated callbacks.
+     */
+    public static void discordUpdateEventHandlers(DiscordEventHandlers handlers){
+        DLL.INSTANCE.Discord_UpdateHandlers(handlers);
     }
 
     /**
@@ -146,6 +155,7 @@ public final class DiscordRPC{
         void Discord_Initialize(String applicationId, DiscordEventHandlers handlers, int autoRegister, String optionalSteamId);
         void Discord_Register(String applicationId, String command);
         void Discord_RegisterSteamGame(String applicationId, String steamId);
+        void Discord_UpdateHandlers(DiscordEventHandlers handlers);
         void Discord_Shutdown();
         void Discord_RunCallbacks();
         void Discord_UpdatePresence(DiscordRichPresence presence);
