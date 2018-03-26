@@ -4,7 +4,7 @@
 	<groupId>net.arikia.dev</groupId>
 	<artifactId>discord-rpc</artifactId>
 	<name>DiscordRPC</name>
-	<version>1.4</version>
+	<version>1.4.2</version>
 	<packaging>jar</packaging>
 
 	<properties>
