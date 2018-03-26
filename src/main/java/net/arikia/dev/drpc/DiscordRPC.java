@@ -126,7 +126,7 @@ public final class DiscordRPC{
 
         if(SystemUtils.IS_OS_WINDOWS){
             boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
-            finalPath = is64bit ? "/win-x64/discord-rpc.dll" : "/lib/win-x32/discord-rpc.dll";
+            finalPath = is64bit ? "/win-x64/discord-rpc.dll" : "/lib/win-x86/discord-rpc.dll";
             tempPath = System.getenv("TEMP") + "/discord-rpc.jar/discord-rpc.dll";
         }else if(SystemUtils.IS_OS_LINUX) {
             finalPath = "/linux/discord-rpc.so";
