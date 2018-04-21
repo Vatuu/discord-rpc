@@ -1,6 +1,7 @@
 ![Logo](https://github.com/vatuu/discord-rpc/raw/master/rpc.png "Java Discord RPC")
 
-[![jitpack](https://jitpack.io/v/Vatuu/discord-rpc.svg)](https://jitpack.io/#Vatuu/discord-rpc)
+[![jitpack](https://jitpack.io/v/Vatuu/discord-rpc.svg)](https://jitpack.io/#Vatuu/discord-rpc) [![Build Status](https://travis-ci.org/Vatuu/discord-rpc.svg?branch=master)](https://travis-ci.org/Vatuu/discord-rpc) 
+
 
 # discord-rpc
 Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
@@ -27,11 +28,11 @@ Using this wrapper is as simple as it can be, with barely any difference of the 
 ### Step 0
   Download one of the releases or download the sources to build your own release. Then, simply add and include it in your project.
   
-  Currently supported OS include ``Windows x86``, ``Windows x64`` and ``Unix x64``. ``OSX`` and ``Unix x86`` will be added soon.
+  Currently supported OS include ``Windows x86``, ``Windows x64``, ``macOS/OSX`` and ``Unix x64``.
 
 ### Step 1
 Initialize the Discord RPC when your Application starts up. The Library is mostly static, so there is no need to create an Instance.
-The ``DiscordRPC.Initialize();`` method takes 3 arguments to start.
+The ``DiscordRPC.initialize();`` method takes 3 arguments to start.
 - ``Client ID`` is the ID of your Discord Application.
 - ``Handler`` is an instance of a DiscordEventHandler-Object. Callbacks to HandlerClasses are registered in there.
 - ``AutoRegister``doesn't really matter right now and is always ``true``.
@@ -71,14 +72,14 @@ To summarize:
 public void startup(){
   DiscordEventHandler handler = new DiscordEventHandler();
   handler.ready = new ReadyEvent();
-  DiscordRPC.Initialize("1234567890", handler, true);
+  DiscordRPC.initialize("1234567890", handler, true);
 }
 ```
   
 This would result in the message "Discord's ready!" being printed out in the console after the connection to Discord has been established.
   
 ### Step 2
-To allow callbacks to be fired, you have to periodically call the method ``DiscordRPC.RunCallbacks();``. Otherwise, no callbacks will be passed
+To allow callbacks to be fired, you have to periodically call the method ``DiscordRPC.runCallbacks();``. Otherwise, no callbacks will be passed
 to the application.
   
 **Congratulations, your Application is ready to utilize the Rich Presence.**
@@ -94,7 +95,7 @@ public void createNewPresence(){
   rich.state = "This is the current state.";
 }
 ```
-After the Object has been created, it simply has to be passed to the DiscordRPC with the methods ``DiscordRPC.UpdatePresence(DiscordRichPresence);``
+After the Object has been created, it simply has to be passed to the DiscordRPC with the methods ``DiscordRPC.updatePresence(DiscordRichPresence);``
 
 ```java
 public void createNewPresence(){
@@ -102,7 +103,7 @@ public void createNewPresence(){
   rich.details = "These are some details.";
   rich.state = "This is the current state.";
   
-  DiscordRPC.UpdatePresence(rich);
+  DiscordRPC.updatePresence(rich);
 }
 ```
 
@@ -113,11 +114,11 @@ utilizing the Join and Spectate features.
 More information regarding the fields of the Rich Presence and the correct usage of them can be found [HERE](https://discordapp.com/developers/docs/rich-presence/how-to#updating-presence "Discord Developer Docs").
 
 ## Shutting down the RPC
-To allow the IOStream utilized by the RPC to close properly, the method ``DiscordRPC.DiscordShutdown();`` should **always** be called on
+To allow the IOStream utilized by the RPC to close properly, the method ``DiscordRPC.discordShutdown();`` should **always** be called on
 exit of your application, otherwise issues might occure.
 
 ## Joining and Spectating
-The method ``DiscordRPC.DiscordRespond(String userId, DiscordReply reply);`` handles the reply on a JoinRequest by a player.
+The method ``DiscordRPC.discordRespond(String userId, DiscordReply reply);`` handles the reply on a JoinRequest by a player.
 When a player requests to join a game, the ``JoinRequestCallback`` is called, which should be used to process the request. That request contains the Username, UserID and
 the avatar of that user transformed into a SHA-1 hash.
 
@@ -140,5 +141,7 @@ The RPCTest has only two commands:
  More questions? I recomment checking the official [Discord Developer Docs](https://discordapp.com/developers/docs/rich-presence/ "Discord Developer Docs").
  
  **Best regards,**
-Vatuu
+Vatuu   
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-7289DA.svg)](https://www.paypal.me/NicolasAdamoglou)
  

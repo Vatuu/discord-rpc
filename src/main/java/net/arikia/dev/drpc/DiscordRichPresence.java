@@ -2,6 +2,9 @@ package net.arikia.dev.drpc;
 
 import com.sun.jna.Structure;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Nicolas "Vatuu" Adamoglou
  * @version 1.0
@@ -30,6 +33,10 @@ public class DiscordRichPresence extends Structure {
     } DiscordRichPresence;
     */
 
+    @Override
+    public List<String> getFieldOrder(){
+        return Arrays.asList("state", "details", "startTimestamp", "endTimestamp", "largeImageKey", "largeImageText", "smallImageKey", "smallImageText", "partyId", "partySize", "partyMax", "matchSecret", "joinSecret", "spectateSecret", "instance");
+    }
     /**
      * State of the player's current party.
      */
@@ -87,6 +94,7 @@ public class DiscordRichPresence extends Structure {
     /**
      * Unique hashed string for Spectate and Join.
      */
+    @Deprecated
     public String matchSecret;
 
     /**
@@ -102,5 +110,6 @@ public class DiscordRichPresence extends Structure {
     /**
      * 	Marks the matchSecret as a game session with a specific beginning and end.
      */
+    @Deprecated
     public int instance;
 }

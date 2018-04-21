@@ -18,10 +18,12 @@ public class Main{
 
         int score = 0;
 
+        System.out.println(System.getProperty("sun.arch.data.model").equals("64"));
+
         initDiscord();
 
         while(running){
-            DiscordRPC.DiscordRunCallbacks();
+            DiscordRPC.discordRunCallbacks();
 
             if(!ready)
                 continue;
@@ -39,11 +41,11 @@ public class Main{
             DiscordRichPresence rich = new DiscordRichPresence();
             rich.state = "Running Test | Private";
             rich.details = "Score = " + score;
-            DiscordRPC.DiscordUpdatePresence(rich);
+            DiscordRPC.discordUpdatePresence(rich);
             ready = true;
         }
 
-        DiscordRPC.DiscordShutdown();
+        DiscordRPC.discordShutdown();
         w.dispose();
     }
 
@@ -60,14 +62,13 @@ public class Main{
         System.out.print("> ");
         Scanner in = new Scanner(System.in);
         String input = in.nextLine();
-        input.toLowerCase();
-        return input;
+        return input.toLowerCase();
     }
 
     private static void initDiscord(){
         DiscordEventHandlers handlers = new DiscordEventHandlers();
         handlers.ready = new Ready();
-        DiscordRPC.DiscordInitialize("378728924143812609", handlers, true);
+        DiscordRPC.discordInitialize("415885161457123338", handlers, true);
     }
 
     private static class Ready implements ReadyCallback{
@@ -76,7 +77,7 @@ public class Main{
             DiscordRichPresence rich = new DiscordRichPresence();
             rich.state = "Running Test | Private";
             rich.details = "Score = 0";
-            DiscordRPC.DiscordUpdatePresence(rich);
+            DiscordRPC.discordUpdatePresence(rich);
             ready = true;
         }
     }
