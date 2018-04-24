@@ -4,19 +4,19 @@
 	<groupId>net.arikia.dev</groupId>
 	<artifactId>discord-rpc</artifactId>
 	<name>DiscordRPC</name>
-	<version>1.4.3</version>
+	<version>1.5.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
-	</repositories>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
 	<dependencies>
 		<dependency>
@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.5</version>
+			<version>2.6</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -37,12 +37,12 @@
 			<version>2.6</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.github.Vatuu</groupId>
-			<artifactId>discord-rpc-binaries</artifactId>
-			<version>3.2.0</version>
-			<scope>compile</scope>
-		</dependency>
+        <dependency>
+            <groupId>com.github.DeJayDevelopment</groupId>
+            <artifactId>discord-rpc-binaries</artifactId>
+            <version>2134741303</version>
+            <scope>compile</scope>
+        </dependency>
 	</dependencies>
 
 	<build>
@@ -50,7 +50,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>3.1.1</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -63,7 +63,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.1</version>
+				<version>3.7.0</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -72,7 +72,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.2</version>
+				<version>3.1.0</version>
 				<executions>
 					<execution>
 						<id>unpack</id>
@@ -81,7 +81,7 @@
 							<goal>unpack-dependencies</goal>
 						</goals>
 						<configuration>
-							<includeGroupIds>com.github.Vatuu</includeGroupIds>
+							<includeGroupIds>com.github.DeJayDevelopment</includeGroupIds>
 							<includeArtifactIds>discord-rpc-binaries</includeArtifactIds>
 							<outputDirectory>${project.build.directory}/binaries-resources</outputDirectory>
 							<overWriteReleases>true</overWriteReleases>

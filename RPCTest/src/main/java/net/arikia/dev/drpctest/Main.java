@@ -1,3 +1,5 @@
+package net.arikia.dev.drpctest;
+
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRPC;
 import net.arikia.dev.drpc.DiscordRichPresence;
@@ -17,8 +19,6 @@ public class Main{
         boolean running = true;
 
         int score = 0;
-
-        System.out.println(System.getProperty("sun.arch.data.model").equals("64"));
 
         initDiscord();
 
