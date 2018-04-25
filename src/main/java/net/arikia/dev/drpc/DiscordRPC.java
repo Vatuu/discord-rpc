@@ -21,7 +21,8 @@ public final class DiscordRPC{
     static { loadDLL(); }
 
     //DLL-Version for Update Check.
-    private static final String DLL_VERSION = "3.2.0";
+    private static final String DLL_VERSION = "3.3.0";
+    private static File homeDir;
 
     /**
      * Method to initialize the Discord-RPC.
@@ -124,16 +125,19 @@ public final class DiscordRPC{
         String finalPath = "";
         String tempPath = "";
 
-        if(SystemUtils.IS_OS_WINDOWS){
+        if (SystemUtils.IS_OS_MAC_OSX) {
+            homeDir = new File(System.getProperty("user.home") + "/Library/Application Support/");
+            finalPath = "/darwin/libdiscord-rpc.dylib";
+            tempPath = homeDir + "/discord-rpc/libdiscord-rpc.dylib";
+        } else if (SystemUtils.IS_OS_WINDOWS) {
+            homeDir = new File(System.getenv("TEMP") + "/discord-rpc");
             boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
             finalPath = is64bit ? "/win-x64/discord-rpc.dll" : "win-x86/discord-rpc.dll";
-            tempPath = System.getenv("TEMP") + "/discord-rpc.jar/discord-rpc.dll";
-        }else if(SystemUtils.IS_OS_LINUX) {
-            finalPath = "/linux/discord-rpc.so";
-            tempPath = System.getenv("TMPDIR") + "/discord-rpc.jar/discord-rpc.so";
-        }else if(SystemUtils.IS_OS_MAC || SystemUtils.IS_OS_MAC_OSX){
-            finalPath = "/osx/discord-rpc.dylib";
-            tempPath = System.getenv("TMPDIR") + "/discord-rpc/discord-rpc.dylib";
+            tempPath = homeDir + "/discord-rpc.jar/discord-rpc.dll";
+        } else {
+            homeDir = new File(System.getProperty("user.home"), ".discord-rpc");
+            finalPath = "/linux/libdiscord-rpc.so";
+            tempPath = homeDir + "/discord-rpc.jar/libdiscord-rpc.so";
         }
 
         File f = new File(tempPath);
@@ -141,7 +145,7 @@ public final class DiscordRPC{
         try(InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = FileUtils.openOutputStream(f)){
             IOUtils.copy(in, out);
             FileUtils.forceDeleteOnExit(f);
-        }catch(IOException e){
+        } catch(IOException e){
             e.printStackTrace();
         }
 
@@ -162,4 +166,6 @@ public final class DiscordRPC{
         void Discord_ClearPresence();
         void Discord_Respond(String userId, int reply);
     }
+
+
 }
