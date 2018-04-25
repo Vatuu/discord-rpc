@@ -14,6 +14,6 @@
     <orderEntry type="library" name="Maven: net.java.dev.jna:jna:4.5.1" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.6" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" name="Maven: com.github.DeJayDevelopment:discord-rpc-binaries:2134741303" level="project" />
+    <orderEntry type="library" name="Maven: com.github.Vatuu:discord-rpc-binaries:3.3.0" level="project" />
   </component>
 </module>

@@ -38,9 +38,9 @@
 			<scope>compile</scope>
 		</dependency>
         <dependency>
-            <groupId>com.github.DeJayDevelopment</groupId>
-            <artifactId>discord-rpc-binaries</artifactId>
-            <version>2134741303</version>
+			<groupId>com.github.Vatuu</groupId>
+			<artifactId>discord-rpc-binaries</artifactId>
+			<version>3.3.0</version>
             <scope>compile</scope>
         </dependency>
 	</dependencies>
@@ -81,7 +81,7 @@
 							<goal>unpack-dependencies</goal>
 						</goals>
 						<configuration>
-							<includeGroupIds>com.github.DeJayDevelopment</includeGroupIds>
+							<includeGroupIds>com.github.Vatuu</includeGroupIds>
 							<includeArtifactIds>discord-rpc-binaries</includeArtifactIds>
 							<outputDirectory>${project.build.directory}/binaries-resources</outputDirectory>
 							<overWriteReleases>true</overWriteReleases>
