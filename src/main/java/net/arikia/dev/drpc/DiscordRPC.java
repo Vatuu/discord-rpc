@@ -125,21 +125,19 @@ public final class DiscordRPC{
         String finalPath = "";
         String tempPath = "";
 
-        if (homeDir == null) {
-            if (SystemUtils.IS_OS_MAC_OSX) {
-                homeDir = new File(System.getProperty("user.home") + "/Library/Application Support/");
-                finalPath = "/darwin/libdiscord-rpc.dylib";
-                tempPath = homeDir + "/discord-rpc/libdiscord-rpc.dylib";
-            } else if (SystemUtils.IS_OS_WINDOWS) {
-                homeDir = new File(System.getenv("TEMP") + "/discord-rpc");
-                boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
-                finalPath = is64bit ? "/win-x64/discord-rpc.dll" : "win-x86/discord-rpc.dll";
-                tempPath = homeDir + "/discord-rpc.jar/discord-rpc.dll";
-            } else {
-                homeDir = new File(System.getProperty("user.home"), ".discord-rpc");
-                finalPath = "/linux/libdiscord-rpc.so";
-                tempPath = homeDir + "/discord-rpc.jar/libdiscord-rpc.so";
-            }
+        if (SystemUtils.IS_OS_MAC_OSX) {
+            homeDir = new File(System.getProperty("user.home") + "/Library/Application Support/");
+            finalPath = "/darwin/libdiscord-rpc.dylib";
+            tempPath = homeDir + "/discord-rpc/libdiscord-rpc.dylib";
+        } else if (SystemUtils.IS_OS_WINDOWS) {
+            homeDir = new File(System.getenv("TEMP") + "/discord-rpc");
+            boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
+            finalPath = is64bit ? "/win-x64/discord-rpc.dll" : "win-x86/discord-rpc.dll";
+            tempPath = homeDir + "/discord-rpc.jar/discord-rpc.dll";
+        } else {
+            homeDir = new File(System.getProperty("user.home"), ".discord-rpc");
+            finalPath = "/linux/libdiscord-rpc.so";
+            tempPath = homeDir + "/discord-rpc.jar/libdiscord-rpc.so";
         }
 
         File f = new File(tempPath);
