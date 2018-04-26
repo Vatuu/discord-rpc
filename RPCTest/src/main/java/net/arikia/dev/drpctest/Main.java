@@ -9,10 +9,9 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static boolean ready = false;
+
     public static void main(String[] args) {
-
-        initDiscord();
-
         JFrame frame = new JFrame("Derp");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel text = new JLabel("In Discord, set your active game to: \"Derp\"");
@@ -21,18 +20,25 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
 
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Shutting down DiscordHook.");
+            DiscordRPC.discordShutdown();
+        }));
+
+        initDiscord();
+
         int score = 0;
 
         while (true) {
-            System.out.println("discordRunCallbacks...");
+            System.out.println("Running callbacks...");
             DiscordRPC.discordRunCallbacks();
-            System.out.println("discordRunCallbacks - Success");
 
-            System.out.println("getInput...");
+            if(!ready)
+                continue;
+
             System.out.print("> ");
             Scanner in = new Scanner(System.in);
             String input = in.nextLine();
-            System.out.println("getInput - Success");
 
             if (!input.equalsIgnoreCase("shutdown")) {
                 if (input.equalsIgnoreCase("test")) {
@@ -42,12 +48,13 @@ public class Main {
                     rich.state = "Running Test | Private";
                     rich.details = "Score = " + score;
                     DiscordRPC.discordUpdatePresence(rich);
+                } else if (input.equalsIgnoreCase("dejay")) {
+                    System.out.println("DeJay has a severe case of the gays, I'm afraid.");
                 } else {
                     System.out.println("Unknown Command!");
                 }
             } else {
                 // lol.
-                DiscordRPC.discordShutdown();
                 frame.dispose();
                 System.exit(0);
             }

@@ -13,7 +13,7 @@ import java.io.OutputStream;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
- * @version 1.0
+ * @version 1.5.0
  */
 
 public final class DiscordRPC{
@@ -22,7 +22,6 @@ public final class DiscordRPC{
 
     //DLL-Version for Update Check.
     private static final String DLL_VERSION = "3.3.0";
-    private static File homeDir;
 
     /**
      * Method to initialize the Discord-RPC.
@@ -121,23 +120,27 @@ public final class DiscordRPC{
 
     //Load DLL depending on the user's architecture.
     private static void loadDLL(){
-        String name = System.mapLibraryName("discord-rpc");
+        String name = "";
+        File homeDir;
         String finalPath = "";
         String tempPath = "";
 
         if (SystemUtils.IS_OS_MAC_OSX) {
+            name = System.mapLibraryName("libdiscord-rpc");
             homeDir = new File(System.getProperty("user.home") + "/Library/Application Support/");
-            finalPath = "/darwin/libdiscord-rpc.dylib";
-            tempPath = homeDir + "/discord-rpc/libdiscord-rpc.dylib";
+            finalPath = "/darwin/" + name;
+            tempPath = homeDir + "/discord-rpc/" + name;
         } else if (SystemUtils.IS_OS_WINDOWS) {
-            homeDir = new File(System.getenv("TEMP") + "/discord-rpc");
+            name = System.mapLibraryName("discord-rpc");
+            homeDir = new File(System.getenv("TEMP"));
             boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
-            finalPath = is64bit ? "/win-x64/discord-rpc.dll" : "win-x86/discord-rpc.dll";
-            tempPath = homeDir + "/discord-rpc.jar/discord-rpc.dll";
+            finalPath = is64bit ? "/win-x64/" + name : "win-x86/" + name;
+            tempPath = homeDir + "/discord-rpc/" + name;
         } else {
+            name = System.mapLibraryName("libdiscord-rpc");
             homeDir = new File(System.getProperty("user.home"), ".discord-rpc");
-            finalPath = "/linux/libdiscord-rpc.so";
-            tempPath = homeDir + "/discord-rpc.jar/libdiscord-rpc.so";
+            finalPath = "/linux/" + name;
+            tempPath = homeDir + "/" + name;
         }
 
         File f = new File(tempPath);
