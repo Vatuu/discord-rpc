@@ -28,9 +28,9 @@ public class Main {
         initDiscord();
 
         int score = 0;
+        System.out.println("Running callbacks...");
 
         while (true) {
-            System.out.println("Running callbacks...");
             DiscordRPC.discordRunCallbacks();
 
             if(!ready)
@@ -54,7 +54,6 @@ public class Main {
                     System.out.println("Unknown Command!");
                 }
             } else {
-                // lol.
                 frame.dispose();
                 System.exit(0);
             }
