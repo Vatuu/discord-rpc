@@ -130,7 +130,7 @@ For further information regarding joining, spectating and getting greenlit, plea
 
 ## The Example Application
 Contained in this repository is a .JAR file called ``RPCTest.jar``. This simple command line application can be used to test the Rich Presence
-for yourself! Simply add the Application named "Derp" to your Discord Games, and it will be recognized. Since Discord only detects games that have an active window, I discourage you from closing the small window called "Derp" that will pop up as soon as you start the RPCTest.
+for yourself! Simply add the Application named "RPCTest" to your Discord Games, and it will be recognized. Since Discord only detects games that have an active window, I discourage you from closing the small window called "Derp" that will pop up as soon as you start the RPCTest.
 
 The RPCTest has only two commands:
   - ``test`` will increase the "score" value in the details of your presence.
