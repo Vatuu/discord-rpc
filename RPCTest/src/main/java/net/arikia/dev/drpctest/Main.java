@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.util.Scanner;
 
 public class Main {
+    
+    public static boolean ready = false;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("RPCTest");
@@ -26,11 +28,13 @@ public class Main {
         initDiscord();
 
         int score = 0;
-        System.out.println("Running callbacks...");
+        System.out.println("Starting callbacks.");
 
         while (true) {
             DiscordRPC.discordRunCallbacks();
-            System.out.println("Ran callbacks...");
+            
+            if(!ready)
+                continue;
 
             System.out.print("> ");
             Scanner in = new Scanner(System.in);
