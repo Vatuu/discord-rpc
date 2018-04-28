@@ -8,7 +8,6 @@ import net.arikia.dev.drpc.callbacks.ReadyCallback;
 public class Ready implements ReadyCallback {
 
     public void apply(DiscordUser user) {
-        Main.ready = true;
         System.out.println("Welcome " + user.username + "#" + user.discriminator + "!");
         DiscordRichPresence rich = new DiscordRichPresence();
         rich.state = "Running Test | Private";

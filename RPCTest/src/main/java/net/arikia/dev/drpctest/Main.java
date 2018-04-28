@@ -8,8 +8,6 @@ import javax.swing.*;
 import java.util.Scanner;
 
 public class Main {
-    
-    public static boolean ready = false;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("RPCTest");
@@ -32,9 +30,6 @@ public class Main {
 
         while (true) {
             DiscordRPC.discordRunCallbacks();
-            
-            if(!ready)
-                continue;
 
             System.out.print("> ");
             Scanner in = new Scanner(System.in);
