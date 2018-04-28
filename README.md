@@ -13,7 +13,7 @@ Set advanced pieces of information about your game in the players' profile, when
 
 The so-called Rich Presence contains the following fields for you to fill in:
 
-- State: The general state the current play-session is in (Waiting, Playing, Watching some Leaderboards, whatever).
+- State: The general state the current play-session is in (Waiting, Playing, Watching some leaderboards, etc).
 - Details: Details to the current play-session, like the location, or current score.
 - Timestamps: Show how long the current game-session will go, or how long the player is already playing, up to you.
 - Images: One big cubic, and one smaller round images with a custom tooltip text, to show some more details.
@@ -34,7 +34,7 @@ Initialize the Discord RPC when your Application starts up. The Library is mostl
 The ``DiscordRPC.initialize();`` method takes 3 arguments to start.
 - ``Client ID`` is the ID of your Discord Application.
 - ``Handler`` is an instance of a DiscordEventHandler-Object. Callbacks to HandlerClasses are registered in there.
-- ``AutoRegister``doesn't really matter right now and is always ``true``.
+- ``AutoRegister``does not really matter right now and is always ``true``.
 - If your application is a Steam Application, the Initialize Methods takes another String of your Steam App ID.
   
 The Event Handler contains instances of the classes that handle Callbacks of the DiscordRPC. These classes have to implement
@@ -134,10 +134,10 @@ for yourself! Simply add the Application named "Derp" to your Discord Games, and
 
 The RPCTest has only two commands:
   - ``test`` will increase the "score" value in the details of your presence.
-  - ``shutdown`` is self-explainatory.
+  - ``shutdown`` is self-explanatory.
  
  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
- More questions? I recomment checking the official [Discord Developer Docs](https://discordapp.com/developers/docs/rich-presence/ "Discord Developer Docs").
+ More questions? I recommend checking the official [Discord Developer Docs](https://discordapp.com/developers/docs/rich-presence/ "Discord Developer Docs").
  
  **Best regards,**
 Vatuu   

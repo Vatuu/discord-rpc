@@ -18,6 +18,7 @@ public class DiscordUser extends Structure {
         const char* userId;
         const char* username;
         const char* avatar;
+        const char* discriminator;
     } DiscordUser;
     */
 
@@ -39,7 +40,7 @@ public class DiscordUser extends Structure {
     /**
      * The discriminator of the player asking to join.
      */
-    public int discriminator;
+    public String discriminator;
 
     /**
      * The avatar hash of the player asking to join.

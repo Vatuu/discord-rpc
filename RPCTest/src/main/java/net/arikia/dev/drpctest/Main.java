@@ -9,19 +9,17 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static boolean ready = false;
-
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Derp");
+        JFrame frame = new JFrame("RPCTest");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JLabel text = new JLabel("In Discord, set your active game to: \"Derp\"");
+        JLabel text = new JLabel("In Discord, set your active game to: " + frame.getTitle());
         frame.getContentPane().add(text, SwingConstants.CENTER);
         frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Shutting down DiscordHook.");
+            System.out.println("Shutting down Discord Hook.");
             DiscordRPC.discordShutdown();
         }));
 
@@ -32,9 +30,7 @@ public class Main {
 
         while (true) {
             DiscordRPC.discordRunCallbacks();
-
-            if(!ready)
-                continue;
+            System.out.println("Ran callbacks...");
 
             System.out.print("> ");
             Scanner in = new Scanner(System.in);
