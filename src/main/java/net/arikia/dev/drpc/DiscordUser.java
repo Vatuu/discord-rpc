@@ -11,14 +11,14 @@ import java.util.List;
  *
  *
  */
-public class DiscordJoinRequest extends Structure {
+public class DiscordUser extends Structure {
 
     /*
-    typedef struct DiscordJoinRequest {
+    typedef struct DiscordUser {
         const char* userId;
         const char* username;
         const char* avatar;
-    } DiscordJoinRequest;
+    } DiscordUser;
     */
 
     @Override
