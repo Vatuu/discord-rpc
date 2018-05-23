@@ -77,7 +77,7 @@ public void startup(){
 }
 ```
   
-This would result in the message "Discord's ready!" being printed out in the console after the connection to Discord has been established.
+This would result in the message "Welcome User#1234!" being printed out in the console after the connection to Discord has been established, and fitted with the users username and discriminator.
   
 ### Step 2
 To allow callbacks to be fired, you have to periodically call the method ``DiscordRPC.runCallbacks();``. Otherwise, no callbacks will be passed
@@ -91,14 +91,14 @@ To update the Rich Presence of a player, a ``DiscordRichPresence`` Object is req
 EventHandler is created, by using a Builder:
 ```java
 public void createNewPresence(){
-  DiscordRichPresence rich = new DiscordRichPresence.Builder("This is the current state.).setDetails("These are some details.").build();
+  DiscordRichPresence rich = new DiscordRichPresence.Builder("This is the current state.").setDetails("These are some details.").build();
 }
 ```
 After the Object has been created, it simply has to be passed to the DiscordRPC with the methods ``DiscordRPC.updatePresence(DiscordRichPresence);``
 
 ```java
 public void createNewPresence(){
-  DiscordRichPresence rich = new DiscordRichPresence.Builder("This is the current state.).setDetails("These are some details.").build();
+  DiscordRichPresence rich = new DiscordRichPresence.Builder("This is the current state.").setDetails("These are some details.").build();
   DiscordRPC.updatePresence(rich);
 }
 ```
