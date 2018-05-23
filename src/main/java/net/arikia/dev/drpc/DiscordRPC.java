@@ -14,8 +14,9 @@ import java.io.OutputStream;
 /**
  * @author Nicolas "Vatuu" Adamoglou
  * @version 1.5.0
+ *
+ * Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
  */
-
 public final class DiscordRPC{
 
     static { loadDLL(); }
@@ -155,6 +156,37 @@ public final class DiscordRPC{
         System.load(f.getAbsolutePath());
     }
 
+    /**
+     * Enum containing reply codes for join request events.
+     * @see net.arikia.dev.drpc.callbacks.JoinRequestCallback
+     */
+    public enum DiscordReply {
+
+        /**
+         * Denies the join request immediately.
+         * Currently behaving the same way like DiscordReply.IGNORE.
+         */
+        NO(0),
+        /**
+         * Accepts the join request, requesting player received a JoinGameCallback.
+         * @see net.arikia.dev.drpc.callbacks.JoinGameCallback
+         */
+        YES(1),
+        /**
+         * Denies the join request by letting it time out(10s).
+         */
+        IGNORE(2);
+
+        /**
+         * Integer reply code send to Discord.
+         */
+        public final int reply;
+
+        DiscordReply(int reply){
+            this.reply = reply;
+        }
+    }
+
     //JNA Interface
     private interface DLL extends Library{
         DLL INSTANCE = (DLL) Native.loadLibrary("discord-rpc", DLL.class);
@@ -169,6 +201,4 @@ public final class DiscordRPC{
         void Discord_ClearPresence();
         void Discord_Respond(String userId, int reply);
     }
-
-
 }

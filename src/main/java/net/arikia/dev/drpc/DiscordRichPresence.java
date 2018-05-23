@@ -1,42 +1,24 @@
 package net.arikia.dev.drpc;
 
 import com.sun.jna.Structure;
+import org.apache.commons.lang.NullArgumentException;
 
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
- * @version 1.0
+ * @version 1.5.0
  *
  *
  */
 public class DiscordRichPresence extends Structure {
 
-    /*
-    typedef struct DiscordRichPresence {
-        const char* state;
-        const char* details;
-        int64_t startTimestamp;
-        int64_t endTimestamp;
-        const char* largeImageKey;
-        const char* largeImageText;
-        const char* smallImageKey;
-        const char* smallImageText;
-        const char* partyId;
-        int partySize;
-        int partyMax;
-        const char* matchSecret;
-        const char* joinSecret;
-        const char* spectateSecret;
-        int8_t instance;
-    } DiscordRichPresence;
-    */
-
     @Override
     public List<String> getFieldOrder(){
         return Arrays.asList("state", "details", "startTimestamp", "endTimestamp", "largeImageKey", "largeImageText", "smallImageKey", "smallImageText", "partyId", "partySize", "partyMax", "matchSecret", "joinSecret", "spectateSecret", "instance");
     }
+
     /**
      * State of the player's current party.
      */
@@ -46,8 +28,9 @@ public class DiscordRichPresence extends Structure {
      * Details to the current game-session of the player.
      */
     public String details;
+
     /**
-     * unix timestamp for the start of the game
+     * Unix timestamp for the start of the game
      */
     public long startTimestamp;
 
@@ -92,7 +75,7 @@ public class DiscordRichPresence extends Structure {
     public int partyMax;
 
     /**
-     * Unique hashed string for Spectate and Join.
+     * Unused.
      */
     @Deprecated
     public String matchSecret;
@@ -108,8 +91,141 @@ public class DiscordRichPresence extends Structure {
     public String joinSecret;
 
     /**
-     * 	Marks the matchSecret as a game session with a specific beginning and end.
+     * Unused.
      */
     @Deprecated
     public int instance;
+
+    /*+
+     * Builder object provided to easily assemble DiscordRichPresence objects without having to add a huge assignment Block.
+     * No method is essential, not called methods/unassigned fields are simply ignored and not applied in the final DiscordRichPresence
+     * seen inside the Discord client.
+     */
+    public static class Builder{
+
+        private DiscordRichPresence p;
+
+        /**
+         * Initiates a new instance of the Presence builder.
+         * @param state String representing the player's current state.
+         *              @see DiscordRichPresence
+         */
+        public Builder(String state){
+            p = new DiscordRichPresence();
+            p.state = state;
+        }
+
+        /**
+         * Sets the details field of the DiscordRichPresence object.
+         * @param details String representing details to the player's current state.
+         *                @see DiscordRichPresence
+         * @return Current Builder object.
+         */
+        public Builder setDetails(String details){
+            p.details = details;
+            return this;
+        }
+
+        /**
+         * Sets the timestamps of the DiscordRichPresence object, to activate the timer display.
+         * @param start Long Unix Timestamp representing the starting point of the timer.
+         * @param end Long Unix Timestamp representing the ending point of the timer.
+         *            @see DiscordRichPresence
+         * @return Current Builder object.
+         */
+        public Builder setTimestamps(long start, long end){
+            p.startTimestamp = start;
+            p.endTimestamp = end;
+            return this;
+        }
+
+        /**
+         * Sets the large image fields of the DiscordRichPresence object. key cannot be null when text is not null.
+         * @param key String key assigned to the image asset inside of the Discord Application.
+         * @param text String text shown as hover text when hovering over the image of the presence.
+         *             @see DiscordRichPresence
+         * @return Current Builder object.
+         */
+        public Builder setBigImage(String key, String text){
+            if((text != null  && !text.equalsIgnoreCase("")) && key == null)
+                throw new NullArgumentException("Image key must not be null when assigning a hover text.");
+
+            p.largeImageKey = key;
+            p.largeImageText = text;
+            return this;
+        }
+
+        /**
+         * Sets the small image fields of the DiscordRichPresence object. key cannot be null when text is not null.
+         * @param key String key assigned to the image asset inside of the Discord Application.
+         * @param text String text shown as hover text when hovering over the image of the presence.
+         *             @see DiscordRichPresence
+         * @return Current Builder object.
+         */
+        public Builder setSmallImage(String key, String text){
+            if((text != null  && !text.equalsIgnoreCase("")) && key == null)
+                throw new NullArgumentException("Image key must not be null when assigning a hover text.");
+
+            p.smallImageKey = key;
+            p.smallImageText = text;
+            return this;
+        }
+
+        /**
+         * Sets the party information for the "Party" section of the user's presence.
+         * @param party Unique String given to the party as identifier.
+         * @param size Integer representing the current size of the user's party.
+         * @param max Integer representing the maximal size of the user's party.
+         *            @see DiscordRichPresence
+         * @return Current Builder object.
+         */
+        public Builder setParty(String party, int size, int max){
+            p.partyId = party;
+            p.partySize = size;
+            p.partyMax = max;
+            return this;
+        }
+
+        /**
+         * Unused.
+         */
+        @Deprecated
+        public Builder setSecrets(String match, String join, String spectate){
+            p.matchSecret = match;
+            p.joinSecret = join;
+            p.spectateSecret = spectate;
+            return this;
+        }
+
+        /**
+         * Sets the secret fields of the DiscordRichPresence object.
+         * @param join Unique String containing necessary information passed to the joining player.
+         * @param spectate Unique String containing necessary information passed to the spectating player.
+         *                 @see DiscordRichPresence
+         * @return Current Builder object.
+         */
+        public Builder setSecrets(String join, String spectate){
+            p.joinSecret = join;
+            p.spectateSecret = spectate;
+            return this;
+        }
+
+        /**
+         * Unused.
+         */
+        @Deprecated
+        public Builder setInstance(boolean i){
+            p.instance = i ? 1 : 0;
+            return this;
+        }
+
+        /**
+         * Returns the fully finished DiscordRichPresence object. Non-assigned fields are being ignored.
+         * @return The build DiscordRichPresence object.
+         * @see DiscordRichPresence
+         */
+        public DiscordRichPresence build(){
+            return p;
+        }
+    }
 }

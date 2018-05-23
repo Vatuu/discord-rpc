@@ -7,23 +7,15 @@ import java.util.List;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
- * @version 1.0
+ * @version 1.5.0
  *
- *
+ * Object containing information about a Discord user.
  */
 public class DiscordUser extends Structure {
 
-    /*
-    typedef struct DiscordUser {
-        const char* userId;
-        const char* username;
-        const char* avatar;
-    } DiscordUser;
-    */
-
     @Override
     public List<String> getFieldOrder(){
-        return Arrays.asList(new String[] {"userId", "username", "discriminator", "avatar"});
+        return Arrays.asList("userId", "username", "discriminator", "avatar");
     }
 
     /**
