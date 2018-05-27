@@ -127,7 +127,7 @@ public final class DiscordRPC{
         String tempPath = "";
 
         if (SystemUtils.IS_OS_MAC_OSX) {
-            name = System.mapLibraryName("libdiscord-rpc");
+            name = System.mapLibraryName("discord-rpc");
             homeDir = new File(System.getProperty("user.home") + "/Library/Application Support/");
             finalPath = "/darwin/" + name;
             tempPath = homeDir + "/discord-rpc/" + name;
@@ -138,7 +138,7 @@ public final class DiscordRPC{
             finalPath = is64bit ? "/win-x64/" + name : "win-x86/" + name;
             tempPath = homeDir + "/discord-rpc/" + name;
         } else {
-            name = System.mapLibraryName("libdiscord-rpc");
+            name = System.mapLibraryName("discord-rpc");
             homeDir = new File(System.getProperty("user.home"), ".discord-rpc");
             finalPath = "/linux/" + name;
             tempPath = homeDir + "/" + name;
