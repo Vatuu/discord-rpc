@@ -13,11 +13,19 @@ import java.io.OutputStream;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
+<<<<<<< HEAD
  * @author DeJay
  * @version 1.0
  */
 
 public class DiscordRPC {
+=======
+ * @version 1.5.0
+ *
+ * Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
+ */
+public final class DiscordRPC{
+>>>>>>> 031fe6a9d23cfd42695b9ba9a869da5002217d25
 
     static { loadDLL(); }
 
@@ -128,6 +136,10 @@ public class DiscordRPC {
         File homeDir;
 
         if (SystemUtils.IS_OS_MAC_OSX) {
+<<<<<<< HEAD
+=======
+            name = System.mapLibraryName("discord-rpc");
+>>>>>>> 031fe6a9d23cfd42695b9ba9a869da5002217d25
             homeDir = new File(System.getProperty("user.home") + "/Library/Application Support/");
             tempPath = homeDir + "/discord-rpc/libdiscord-rpc.dylib";
             finalPath = "/darwin/libdiscord-rpc.dylib";
@@ -137,6 +149,10 @@ public class DiscordRPC {
             tempPath = homeDir + "/discord-rpc.jar/discord-rpc.dll";
             finalPath = is64bit ? "/win-x64/discord-rpc.dll" : "win-x86/discord-rpc.dll";
         } else {
+<<<<<<< HEAD
+=======
+            name = System.mapLibraryName("discord-rpc");
+>>>>>>> 031fe6a9d23cfd42695b9ba9a869da5002217d25
             homeDir = new File(System.getProperty("user.home"), ".discord-rpc");
             tempPath = homeDir + "/discord-rpc.jar/libdiscord-rpc.so";
             finalPath = "/linux/libdiscord-rpc.so";
@@ -154,6 +170,37 @@ public class DiscordRPC {
         System.load(f.getAbsolutePath());
     }
 
+    /**
+     * Enum containing reply codes for join request events.
+     * @see net.arikia.dev.drpc.callbacks.JoinRequestCallback
+     */
+    public enum DiscordReply {
+
+        /**
+         * Denies the join request immediately.
+         * Currently behaving the same way like DiscordReply.IGNORE.
+         */
+        NO(0),
+        /**
+         * Accepts the join request, requesting player received a JoinGameCallback.
+         * @see net.arikia.dev.drpc.callbacks.JoinGameCallback
+         */
+        YES(1),
+        /**
+         * Denies the join request by letting it time out(10s).
+         */
+        IGNORE(2);
+
+        /**
+         * Integer reply code send to Discord.
+         */
+        public final int reply;
+
+        DiscordReply(int reply){
+            this.reply = reply;
+        }
+    }
+
     //JNA Interface
     private interface DLL extends Library {
         DLL INSTANCE = Native.loadLibrary("discord-rpc", DLL.class);
@@ -168,5 +215,9 @@ public class DiscordRPC {
         void Discord_ClearPresence();
         void Discord_Respond(String userId, int reply);
     }
+<<<<<<< HEAD
 
 }
+=======
+}
+>>>>>>> 031fe6a9d23cfd42695b9ba9a869da5002217d25

@@ -7,12 +7,13 @@ import java.util.List;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
- * @version 1.0
+ * @version 1.5.0
  *
- *
+ * Object containing information about a Discord user.
  */
 public class DiscordUser extends Structure {
 
+<<<<<<< HEAD
     /*
     typedef struct DiscordUser {
         const char* userId;
@@ -22,9 +23,11 @@ public class DiscordUser extends Structure {
     } DiscordUser;
     */
 
+=======
+>>>>>>> 031fe6a9d23cfd42695b9ba9a869da5002217d25
     @Override
     public List<String> getFieldOrder(){
-        return Arrays.asList(new String[] {"userId", "username", "discriminator", "avatar"});
+        return Arrays.asList("userId", "username", "discriminator", "avatar");
     }
 
     /**

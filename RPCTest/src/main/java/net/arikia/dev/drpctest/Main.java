@@ -9,10 +9,19 @@ import java.util.Scanner;
 
 public class Main {
 
+<<<<<<< HEAD
     public static void main(String[] args) {
         JFrame frame = new JFrame("RPCTest");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel text = new JLabel("In Discord, set your active game to: " + frame.getTitle());
+=======
+    private static boolean ready = false;
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Derp");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        JLabel text = new JLabel("In Discord, set your active game to: \"Derp\"");
+>>>>>>> 031fe6a9d23cfd42695b9ba9a869da5002217d25
         frame.getContentPane().add(text, SwingConstants.CENTER);
         frame.setResizable(false);
         frame.pack();
@@ -37,12 +46,9 @@ public class Main {
 
             if (!input.equalsIgnoreCase("shutdown")) {
                 if (input.equalsIgnoreCase("test")) {
-                    System.out.println("Test.");
                     score++;
-                    DiscordRichPresence rich = new DiscordRichPresence();
-                    rich.state = "Running Test | Private";
-                    rich.details = "Score = " + score;
-                    DiscordRPC.discordUpdatePresence(rich);
+                    System.out.println("New Score: " + score);
+                    DiscordRPC.discordUpdatePresence(new DiscordRichPresence.Builder("Score = " + score).setDetails("Running Test | Private").build());
                 } else if (input.equalsIgnoreCase("dejay")) {
                     System.out.println("DeJay has a severe case of the gays, I'm afraid.");
                 } else {
@@ -56,8 +62,11 @@ public class Main {
     }
 
     private static void initDiscord() {
-        DiscordEventHandlers handlers = new DiscordEventHandlers();
-        handlers.ready = new Ready();
+        DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
+            Main.ready = true;
+            System.out.println("Welcome " + user.username + "#" + user.discriminator + ".");
+            DiscordRPC.discordUpdatePresence(new DiscordRichPresence.Builder("Score = 0").setDetails("Running Test | Private").build());
+        }).build();
         DiscordRPC.discordInitialize("415885161457123338", handlers, true);
     }
 
