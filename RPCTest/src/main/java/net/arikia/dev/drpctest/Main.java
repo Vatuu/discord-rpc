@@ -9,36 +9,32 @@ import java.util.Scanner;
 
 public class Main {
 
-<<<<<<< HEAD
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("RPCTest");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JLabel text = new JLabel("In Discord, set your active game to: " + frame.getTitle());
-=======
     private static boolean ready = false;
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Derp");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JLabel text = new JLabel("In Discord, set your active game to: \"Derp\"");
->>>>>>> 031fe6a9d23cfd42695b9ba9a869da5002217d25
         frame.getContentPane().add(text, SwingConstants.CENTER);
         frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Shutting down Discord Hook.");
+            System.out.println("Shutting down DiscordHook.");
             DiscordRPC.discordShutdown();
         }));
 
         initDiscord();
 
         int score = 0;
-        System.out.println("Starting callbacks.");
+        System.out.println("Running callbacks...");
 
         while (true) {
             DiscordRPC.discordRunCallbacks();
+
+            if(!ready)
+                continue;
 
             System.out.print("> ");
             Scanner in = new Scanner(System.in);

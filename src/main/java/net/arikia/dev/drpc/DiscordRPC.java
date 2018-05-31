@@ -13,19 +13,11 @@ import java.io.OutputStream;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
-<<<<<<< HEAD
- * @author DeJay
- * @version 1.0
- */
-
-public class DiscordRPC {
-=======
  * @version 1.5.0
  *
  * Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
  */
 public final class DiscordRPC{
->>>>>>> 031fe6a9d23cfd42695b9ba9a869da5002217d25
 
     static { loadDLL(); }
 
@@ -38,7 +30,7 @@ public final class DiscordRPC{
      * @param handlers      EventHandlers
      * @param autoRegister  AutoRegister
      */
-    public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister) {
+    public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister){
         DLL.INSTANCE.Discord_Initialize(applicationId, handlers, autoRegister ? 1 : 0, null);
     }
 
@@ -49,7 +41,7 @@ public final class DiscordRPC{
      * @param applicationId ApplicationID/ClientID
      * @param command Launch Command of the application/game.
      */
-    public static void discordRegister(String applicationId, String command) {
+    public static void discordRegister(String applicationId, String command){
         DLL.INSTANCE.Discord_Register(applicationId, command);
     }
 
@@ -61,7 +53,7 @@ public final class DiscordRPC{
      * @param autoRegister  AutoRegister
      * @param steamId       SteamAppID
      */
-    public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister, String steamId) {
+    public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister, String steamId){
         DLL.INSTANCE.Discord_Initialize(applicationId, handlers, autoRegister ? 1 : 0, steamId);
     }
 
@@ -72,7 +64,7 @@ public final class DiscordRPC{
      * @param applicationId ApplicationID/ClientID
      * @param steamId SteamID of the application/game.
      */
-    public static void discordRegisterSteam(String applicationId, String steamId) {
+    public static void discordRegisterSteam(String applicationId, String steamId){
         DLL.INSTANCE.Discord_RegisterSteamGame(applicationId, steamId);
     }
 
@@ -81,7 +73,7 @@ public final class DiscordRPC{
      * already called.
      * @param handlers DiscordEventHandler object with updated callbacks.
      */
-    public static void discordUpdateEventHandlers(DiscordEventHandlers handlers) {
+    public static void discordUpdateEventHandlers(DiscordEventHandlers handlers){
         DLL.INSTANCE.Discord_UpdateHandlers(handlers);
     }
 
@@ -127,43 +119,37 @@ public final class DiscordRPC{
         DLL.INSTANCE.Discord_Respond(userId, reply.reply);
     }
 
-    /**
-     * Internal Method to load discord-rpc depending on the OS.
-     */
-    public static void loadDLL() {
-        String finalPath;
-        String tempPath;
+    //Load DLL depending on the user's architecture.
+    private static void loadDLL(){
+        String name = "";
         File homeDir;
+        String finalPath = "";
+        String tempPath = "";
 
         if (SystemUtils.IS_OS_MAC_OSX) {
-<<<<<<< HEAD
-=======
             name = System.mapLibraryName("discord-rpc");
->>>>>>> 031fe6a9d23cfd42695b9ba9a869da5002217d25
             homeDir = new File(System.getProperty("user.home") + "/Library/Application Support/");
-            tempPath = homeDir + "/discord-rpc/libdiscord-rpc.dylib";
-            finalPath = "/darwin/libdiscord-rpc.dylib";
+            finalPath = "/darwin/" + name;
+            tempPath = homeDir + "/discord-rpc/" + name;
         } else if (SystemUtils.IS_OS_WINDOWS) {
-            boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
-            homeDir = new File(System.getenv("TEMP") + "/discord-rpc");
-            tempPath = homeDir + "/discord-rpc.jar/discord-rpc.dll";
-            finalPath = is64bit ? "/win-x64/discord-rpc.dll" : "win-x86/discord-rpc.dll";
-        } else {
-<<<<<<< HEAD
-=======
             name = System.mapLibraryName("discord-rpc");
->>>>>>> 031fe6a9d23cfd42695b9ba9a869da5002217d25
+            homeDir = new File(System.getenv("TEMP"));
+            boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
+            finalPath = is64bit ? "/win-x64/" + name : "win-x86/" + name;
+            tempPath = homeDir + "/discord-rpc/" + name;
+        } else {
+            name = System.mapLibraryName("discord-rpc");
             homeDir = new File(System.getProperty("user.home"), ".discord-rpc");
-            tempPath = homeDir + "/discord-rpc.jar/libdiscord-rpc.so";
-            finalPath = "/linux/libdiscord-rpc.so";
+            finalPath = "/linux/" + name;
+            tempPath = homeDir + "/" + name;
         }
 
         File f = new File(tempPath);
 
-        try(InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = FileUtils.openOutputStream(f)) {
+        try(InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = FileUtils.openOutputStream(f)){
             IOUtils.copy(in, out);
             FileUtils.forceDeleteOnExit(f);
-        } catch(IOException e) {
+        } catch(IOException e){
             e.printStackTrace();
         }
 
@@ -202,8 +188,8 @@ public final class DiscordRPC{
     }
 
     //JNA Interface
-    private interface DLL extends Library {
-        DLL INSTANCE = Native.loadLibrary("discord-rpc", DLL.class);
+    private interface DLL extends Library{
+        DLL INSTANCE = (DLL) Native.loadLibrary("discord-rpc", DLL.class);
 
         void Discord_Initialize(String applicationId, DiscordEventHandlers handlers, int autoRegister, String optionalSteamId);
         void Discord_Register(String applicationId, String command);
@@ -215,9 +201,4 @@ public final class DiscordRPC{
         void Discord_ClearPresence();
         void Discord_Respond(String userId, int reply);
     }
-<<<<<<< HEAD
-
 }
-=======
-}
->>>>>>> 031fe6a9d23cfd42695b9ba9a869da5002217d25

@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/RPCTest/RPCTest.iml" filepath="$PROJECT_DIR$/RPCTest/RPCTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/discord-rpc.iml" filepath="$PROJECT_DIR$/discord-rpc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/discord-rpc.iml" filepath="$PROJECT_DIR$/.idea/discord-rpc.iml" />
     </modules>
   </component>
 </project>

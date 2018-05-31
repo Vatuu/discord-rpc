@@ -13,18 +13,6 @@ import java.util.List;
  */
 public class DiscordUser extends Structure {
 
-<<<<<<< HEAD
-    /*
-    typedef struct DiscordUser {
-        const char* userId;
-        const char* username;
-        const char* avatar;
-        const char* discriminator;
-    } DiscordUser;
-    */
-
-=======
->>>>>>> 031fe6a9d23cfd42695b9ba9a869da5002217d25
     @Override
     public List<String> getFieldOrder(){
         return Arrays.asList("userId", "username", "discriminator", "avatar");
@@ -43,7 +31,7 @@ public class DiscordUser extends Structure {
     /**
      * The discriminator of the player asking to join.
      */
-    public String discriminator;
+    public int discriminator;
 
     /**
      * The avatar hash of the player asking to join.
