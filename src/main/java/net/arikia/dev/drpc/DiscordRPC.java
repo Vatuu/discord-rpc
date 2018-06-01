@@ -119,42 +119,41 @@ public final class DiscordRPC{
         DLL.INSTANCE.Discord_Respond(userId, reply.reply);
     }
 
-    //Load DLL depending on the user's architecture.
-    private static void loadDLL(){
-        String name = "";
+    /**
+     * Internal Method to load discord-rpc depending on the OS.
+     */
+    public static void loadDLL() {
+        String finalPath;
+        String tempPath;
         File homeDir;
-        String finalPath = "";
-        String tempPath = "";
 
         if (SystemUtils.IS_OS_MAC_OSX) {
-            name = System.mapLibraryName("discord-rpc");
             homeDir = new File(System.getProperty("user.home") + "/Library/Application Support/");
-            finalPath = "/darwin/" + name;
-            tempPath = homeDir + "/discord-rpc/" + name;
+            tempPath = homeDir + "/discord-rpc/libdiscord-rpc.dylib";
+            finalPath = "/darwin/libdiscord-rpc.dylib";
         } else if (SystemUtils.IS_OS_WINDOWS) {
-            name = System.mapLibraryName("discord-rpc");
-            homeDir = new File(System.getenv("TEMP"));
             boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
-            finalPath = is64bit ? "/win-x64/" + name : "win-x86/" + name;
-            tempPath = homeDir + "/discord-rpc/" + name;
+            homeDir = new File(System.getenv("TEMP") + "/discord-rpc");
+            tempPath = homeDir + "/discord-rpc.jar/discord-rpc.dll";
+            finalPath = is64bit ? "/win-x64/discord-rpc.dll" : "win-x86/discord-rpc.dll";
         } else {
-            name = System.mapLibraryName("discord-rpc");
             homeDir = new File(System.getProperty("user.home"), ".discord-rpc");
-            finalPath = "/linux/" + name;
-            tempPath = homeDir + "/" + name;
+            tempPath = homeDir + "/discord-rpc.jar/libdiscord-rpc.so";
+            finalPath = "/linux/libdiscord-rpc.so";
         }
 
         File f = new File(tempPath);
 
-        try(InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = FileUtils.openOutputStream(f)){
+        try(InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = FileUtils.openOutputStream(f)) {
             IOUtils.copy(in, out);
             FileUtils.forceDeleteOnExit(f);
-        } catch(IOException e){
+        } catch(IOException e) {
             e.printStackTrace();
         }
 
         System.load(f.getAbsolutePath());
     }
+
 
     /**
      * Enum containing reply codes for join request events.
