@@ -1,4 +1,4 @@
-.idea/
+.idea/*
 target/
 discord-rpc.iml
 dependency-reduced-pom.xml
