@@ -1,5 +1,6 @@
 package net.arikia.dev.drpc;
 
+import com.sun.istack.internal.Nullable;
 import com.sun.jna.Structure;
 import org.apache.commons.lang.NullArgumentException;
 
@@ -127,14 +128,23 @@ public class DiscordRichPresence extends Structure {
         }
 
         /**
-         * Sets the timestamps of the DiscordRichPresence object, to activate the timer display.
+         * Sets the starting timestamps of the DiscordRichPresence object, to activate the timer display.
          * @param start Long Unix Timestamp representing the starting point of the timer.
+         *            @see DiscordRichPresence
+         * @return Current Builder object.
+         */
+        public Builder setStartTimestamps(long start){
+            p.startTimestamp = start;
+            return this;
+        }
+
+        /**
+         * Sets the ending timestamps of the DiscordRichPresence object, to activate the timer display.
          * @param end Long Unix Timestamp representing the ending point of the timer.
          *            @see DiscordRichPresence
          * @return Current Builder object.
          */
-        public Builder setTimestamps(long start, long end){
-            p.startTimestamp = start;
+        public Builder setEndTimestamp(long end){
             p.endTimestamp = end;
             return this;
         }
