@@ -31,7 +31,7 @@ public class DiscordUser extends Structure {
     /**
      * The discriminator of the player asking to join.
      */
-    public int discriminator;
+    public String discriminator;
 
     /**
      * The avatar hash of the player asking to join.
