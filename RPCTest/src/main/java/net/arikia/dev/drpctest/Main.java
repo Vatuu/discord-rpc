@@ -60,7 +60,7 @@ public class Main {
     private static void initDiscord() {
         DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
             Main.ready = true;
-            System.out.println("Welcome " + user.username + "#" + user.discriminator + ".");
+            System.out.println("Welcome " + user.username + "#" + String.valueOf(user.discriminator) + ".");
             DiscordRPC.discordUpdatePresence(new DiscordRichPresence.Builder("Score = 0").setDetails("Running Test | Private").build());
         }).build();
         DiscordRPC.discordInitialize("415885161457123338", handlers, true);

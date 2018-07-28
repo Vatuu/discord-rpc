@@ -2,14 +2,12 @@ package net.arikia.dev.drpc;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.lang3.SystemUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
@@ -21,7 +19,7 @@ public final class DiscordRPC{
 
     static { loadDLL(); }
 
-    //DLL-Version for Update Check.
+    //DLL-Version for Update Check (soon).
     private static final String DLL_VERSION = "3.3.0";
 
     /**
@@ -121,10 +119,10 @@ public final class DiscordRPC{
 
     //Load DLL depending on the user's architecture.
     private static void loadDLL(){
-        String name = "";
+        String name;
         File homeDir;
-        String finalPath = "";
-        String tempPath = "";
+        String finalPath;
+        String tempPath;
 
         if (SystemUtils.IS_OS_MAC_OSX) {
             name = System.mapLibraryName("discord-rpc");
@@ -146,10 +144,10 @@ public final class DiscordRPC{
 
         File f = new File(tempPath);
 
-        try(InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = FileUtils.openOutputStream(f)){
-            IOUtils.copy(in, out);
-            FileUtils.forceDeleteOnExit(f);
-        } catch(IOException e){
+        try(OutputStream out = new FileOutputStream(f)){
+            out.write(Files.readAllBytes(Paths.get(DiscordRPC.class.getResource(finalPath).toURI())));
+            f.deleteOnExit();
+        } catch(IOException | URISyntaxException e){
             e.printStackTrace();
         }
 

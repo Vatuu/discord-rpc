@@ -1,8 +1,6 @@
 package net.arikia.dev.drpc;
 
-import com.sun.istack.internal.Nullable;
 import com.sun.jna.Structure;
-import org.apache.commons.lang.NullArgumentException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,8 +8,6 @@ import java.util.List;
 /**
  * @author Nicolas "Vatuu" Adamoglou
  * @version 1.5.0
- *
- *
  */
 public class DiscordRichPresence extends Structure {
 
@@ -158,7 +154,7 @@ public class DiscordRichPresence extends Structure {
          */
         public Builder setBigImage(String key, String text){
             if((text != null  && !text.equalsIgnoreCase("")) && key == null)
-                throw new NullArgumentException("Image key must not be null when assigning a hover text.");
+                throw new IllegalArgumentException("Image key must not be null when assigning a hover text.");
 
             p.largeImageKey = key;
             p.largeImageText = text;
@@ -174,7 +170,7 @@ public class DiscordRichPresence extends Structure {
          */
         public Builder setSmallImage(String key, String text){
             if((text != null  && !text.equalsIgnoreCase("")) && key == null)
-                throw new NullArgumentException("Image key must not be null when assigning a hover text.");
+                throw new IllegalArgumentException("Image key must not be null when assigning a hover text.");
 
             p.smallImageKey = key;
             p.smallImageText = text;
