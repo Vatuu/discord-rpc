@@ -14,7 +14,4 @@ public final class OSUtil {
                 .startsWith("win");
     }
 
-    private OSUtil() {
-        super();
-    }
 }

@@ -2,7 +2,6 @@ package net.arikia.dev.drpc;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import org.apache.commons.lang3.SystemUtils;
 
 import java.io.*;
 import java.net.URISyntaxException;
