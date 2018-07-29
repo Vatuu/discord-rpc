@@ -1,99 +1,204 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.arikia.dev</groupId>
-	<artifactId>discord-rpc</artifactId>
-	<name>DiscordRPC</name>
-	<version>1.5.0</version>
-	<packaging>jar</packaging>
+package net.arikia.dev.drpc;
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+import com.sun.jna.Library;
+import com.sun.jna.Native;
+import org.apache.commons.lang3.SystemUtils;
 
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
+import java.io.*;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-	<dependencies>
-		<dependency>
-			<groupId>net.java.dev.jna</groupId>
-			<artifactId>jna</artifactId>
-			<version>4.5.1</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.github.Vatuu</groupId>
-			<artifactId>discord-rpc-binaries</artifactId>
-			<version>3.3.0</version>
-            <scope>compile</scope>
-        </dependency>
-	</dependencies>
+/**
+ * @author Nicolas "Vatuu" Adamoglou
+ * @version 1.5.0
+ *
+ * Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
+ */
+public final class DiscordRPC{
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.1.1</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.7.0</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.1.0</version>
-				<executions>
-					<execution>
-						<id>unpack</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>unpack-dependencies</goal>
-						</goals>
-						<configuration>
-							<includeGroupIds>com.github.Vatuu</includeGroupIds>
-							<includeArtifactIds>discord-rpc-binaries</includeArtifactIds>
-							<outputDirectory>${project.build.directory}/binaries-resources</outputDirectory>
-							<overWriteReleases>true</overWriteReleases>
-							<overWriteSnapshots>true</overWriteSnapshots>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-		<resources>
-			<resource>
-				<filtering>false</filtering>
-				<directory>${project.build.directory}/binaries-resources</directory>
-			</resource>
-			<resource>
-				<filtering>false</filtering>
-				<directory>${basedir}/src/main/resources</directory>
-			</resource>
-		</resources>
-		<finalName>discord-rpc</finalName>
-	</build>
-</project>
+    static { loadDLL(); }
+
+
+    //DLL-Version for Update Check (soon).
+    private static final String DLL_VERSION = "3.3.0";
+
+    /**
+     * Method to initialize the Discord-RPC.
+     * @param applicationId ApplicationID/ClientID
+     * @param handlers      EventHandlers
+     * @param autoRegister  AutoRegister
+     */
+    public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister){
+        DLL.INSTANCE.Discord_Initialize(applicationId, handlers, autoRegister ? 1 : 0, null);
+    }
+
+    /**
+     * Method to register the executable of the application/game.
+     * Only applicable when autoRegister in discordInitialize is false.
+     *
+     * @param applicationId ApplicationID/ClientID
+     * @param command Launch Command of the application/game.
+     */
+    public static void discordRegister(String applicationId, String command){
+        DLL.INSTANCE.Discord_Register(applicationId, command);
+    }
+
+    /**
+     * Method to initialize the Discord-RPC within a Steam Application.
+     * @param applicationId ApplicationID/ClientID
+     * @param handlers      EventHandlers
+     *                      @see DiscordEventHandlers
+     * @param autoRegister  AutoRegister
+     * @param steamId       SteamAppID
+     */
+    public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister, String steamId){
+        DLL.INSTANCE.Discord_Initialize(applicationId, handlers, autoRegister ? 1 : 0, steamId);
+    }
+
+    /**
+     * Method to register the Steam-Executable of the application/game.
+     * Only applicable when autoRegister in discordInitializeSteam is false.
+     *
+     * @param applicationId ApplicationID/ClientID
+     * @param steamId SteamID of the application/game.
+     */
+    public static void discordRegisterSteam(String applicationId, String steamId){
+        DLL.INSTANCE.Discord_RegisterSteamGame(applicationId, steamId);
+    }
+
+    /**
+     * Method to update the registered EventHandlers, after the initialization was
+     * already called.
+     * @param handlers DiscordEventHandler object with updated callbacks.
+     */
+    public static void discordUpdateEventHandlers(DiscordEventHandlers handlers){
+        DLL.INSTANCE.Discord_UpdateHandlers(handlers);
+    }
+
+    /**
+     * Method to shutdown the Discord-RPC from within the application.
+     */
+    public static void discordShutdown(){
+        DLL.INSTANCE.Discord_Shutdown();
+    }
+
+    /**
+     * Method to call Callbacks from within the library.
+     * Must be called periodically.
+     */
+    public static void discordRunCallbacks(){
+        DLL.INSTANCE.Discord_RunCallbacks();
+    }
+
+    /**
+     * Method to update the DiscordRichPresence of the client.
+     * @param presence Instance of DiscordRichPresence
+     *                 @see DiscordRichPresence
+     */
+    public static void discordUpdatePresence(DiscordRichPresence presence){
+        DLL.INSTANCE.Discord_UpdatePresence(presence);
+    }
+
+    /**
+     * Method to clear(and therefor hide) the DiscordRichPresence until a new
+     * presence is applied.
+     */
+    public static void discordClearPresence(){
+        DLL.INSTANCE.Discord_ClearPresence();
+    }
+
+    /**
+     * Method to respond to Join/Spectate Callback.
+     * @param userId UserID of the user to respond to.
+     * @param reply DiscordReply to request.
+     *              @see DiscordReply
+     */
+    public static void discordRespond(String userId, DiscordReply reply){
+        DLL.INSTANCE.Discord_Respond(userId, reply.reply);
+    }
+
+    //Load DLL depending on the user's architecture.
+    private static void loadDLL(){
+        String name;
+        Path homeDir;
+        String finalPath;
+        String tempPath;
+
+        if (OSUtil.isMac()) {
+            name = System.mapLibraryName("discord-rpc");
+            homeDir = Paths.get(System.getProperty("user.home") + "/Library/Application Support/");
+            finalPath = "/darwin/" + name;
+            tempPath = homeDir + "/discord-rpc/" + name;
+        } else if (OSUtil.isWindows()) {
+            name = System.mapLibraryName("discord-rpc");
+            homeDir = Paths.get(System.getenv("TEMP"));
+            boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
+            finalPath = is64bit ? "/win-x64/" + name : "win-x86/" + name;
+            tempPath = homeDir + "/discord-rpc/" + name;
+        } else {
+            name = System.mapLibraryName("discord-rpc");
+            homeDir = Paths.get(System.getProperty("user.home"), ".discord-rpc");
+            finalPath = "/linux/" + name;
+            tempPath = homeDir + "/" + name;
+        }
+
+        File f = new File(tempPath);
+
+        try(OutputStream out = new FileOutputStream(f)){
+            out.write(Files.readAllBytes(Paths.get(DiscordRPC.class.getResource(finalPath).toURI())));
+            f.deleteOnExit();
+        } catch(IOException | URISyntaxException e){
+            e.printStackTrace();
+        }
+
+        System.load(f.getAbsolutePath());
+    }
+
+    /**
+     * Enum containing reply codes for join request events.
+     * @see net.arikia.dev.drpc.callbacks.JoinRequestCallback
+     */
+    public enum DiscordReply {
+
+        /**
+         * Denies the join request immediately.
+         * Currently behaving the same way like DiscordReply.IGNORE.
+         */
+        NO(0),
+        /**
+         * Accepts the join request, requesting player received a JoinGameCallback.
+         * @see net.arikia.dev.drpc.callbacks.JoinGameCallback
+         */
+        YES(1),
+        /**
+         * Denies the join request by letting it time out(10s).
+         */
+        IGNORE(2);
+
+        /**
+         * Integer reply code send to Discord.
+         */
+        public final int reply;
+
+        DiscordReply(int reply){
+            this.reply = reply;
+        }
+    }
+
+    //JNA Interface
+    private interface DLL extends Library{
+        DLL INSTANCE = (DLL) Native.loadLibrary("discord-rpc", DLL.class);
+
+        void Discord_Initialize(String applicationId, DiscordEventHandlers handlers, int autoRegister, String optionalSteamId);
+        void Discord_Register(String applicationId, String command);
+        void Discord_RegisterSteamGame(String applicationId, String steamId);
+        void Discord_UpdateHandlers(DiscordEventHandlers handlers);
+        void Discord_Shutdown();
+        void Discord_RunCallbacks();
+        void Discord_UpdatePresence(DiscordRichPresence presence);
+        void Discord_ClearPresence();
+        void Discord_Respond(String userId, int reply);
+    }
+}
