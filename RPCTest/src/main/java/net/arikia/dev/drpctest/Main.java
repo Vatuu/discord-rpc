@@ -45,8 +45,6 @@ public class Main {
                     score++;
                     System.out.println("New Score: " + score);
                     DiscordRPC.discordUpdatePresence(new DiscordRichPresence.Builder("Score = " + score).setDetails("Running Test | Private").build());
-                } else if (input.equalsIgnoreCase("dejay")) {
-                    System.out.println("DeJay has a severe case of the gays, I'm afraid.");
                 } else {
                     System.out.println("Unknown Command!");
                 }
