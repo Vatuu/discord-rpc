@@ -6,14 +6,14 @@
 
     <groupId>net.arikia.dev</groupId>
     <artifactId>RPCTest</artifactId>
-    <version>1.5</version>
+    <version>1.6.0</version>
 
-    <repositories>
+    <!--repositories>
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
-    </repositories>
+    </repositories-->
 
     <build>
         <finalName>RPCTest</finalName>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>net.arikia.dev</groupId>
             <artifactId>discord-rpc</artifactId>
-            <version>LATEST</version>
+            <version>1.6.0</version>
         </dependency>
     </dependencies>
 </project>

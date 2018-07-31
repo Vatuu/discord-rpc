@@ -1,8 +1,12 @@
 package net.arikia.dev.drpc;
 
+/**
+ * @author Dejay
+ * @version 1.6.0
+ *
+ * Object containing utils for detecting the user's OS.
+ */
 public final class OSUtil {
-
-    //I wanted this to be easier and no stupid static.
 
     public static boolean isMac() {
         return System.getProperty("os.name").toLowerCase()

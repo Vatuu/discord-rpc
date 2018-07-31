@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
- * @version 1.5.0
+ * @version 1.6.0
  */
 public class DiscordRichPresence extends Structure {
 

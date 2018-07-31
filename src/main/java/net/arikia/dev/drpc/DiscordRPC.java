@@ -2,16 +2,12 @@ package net.arikia.dev.drpc;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import org.apache.commons.lang3.SystemUtils;
 
 import java.io.*;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
- * @version 1.5.0
+ * @version 1.6.0
  *
  * Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
  */
@@ -124,12 +120,12 @@ public final class DiscordRPC{
         String finalPath;
         String tempPath;
 
-        if (SystemUtils.IS_OS_MAC_OSX) {
+        if (OSUtil.isMac()) {
             name = System.mapLibraryName("discord-rpc");
             homeDir = new File(System.getProperty("user.home") + "/Library/Application Support/");
             finalPath = "/darwin/" + name;
             tempPath = homeDir + "/discord-rpc/" + name;
-        } else if (SystemUtils.IS_OS_WINDOWS) {
+        } else if (OSUtil.isWindows()) {
             name = System.mapLibraryName("discord-rpc");
             homeDir = new File(System.getenv("TEMP"));
             boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
@@ -144,10 +140,10 @@ public final class DiscordRPC{
 
         File f = new File(tempPath);
 
-        try(OutputStream out = new FileOutputStream(f)){
-            out.write(Files.readAllBytes(Paths.get(DiscordRPC.class.getResource(finalPath).toURI())));
+        try(InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = new FileOutputStream(f)){
+            copyFile(in, out);
             f.deleteOnExit();
-        } catch(IOException | URISyntaxException e){
+        } catch(IOException e){
             e.printStackTrace();
         }
 
@@ -198,5 +194,13 @@ public final class DiscordRPC{
         void Discord_UpdatePresence(DiscordRichPresence presence);
         void Discord_ClearPresence();
         void Discord_Respond(String userId, int reply);
+    }
+
+    private static void copyFile(final InputStream input, final OutputStream output) throws IOException{
+        byte[] buffer = new byte[1024 * 4];
+        int n;
+        while( -1 != (n = input.read(buffer))){
+            output.write(buffer, 0, n);
+        }
     }
 }

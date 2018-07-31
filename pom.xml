@@ -4,7 +4,7 @@
     <groupId>net.arikia.dev</groupId>
     <artifactId>discord-rpc</artifactId>
     <name>DiscordRPC</name>
-    <version>1.5.0</version>
+    <version>1.6.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>com.github.Vatuu</groupId>
             <artifactId>discord-rpc-binaries</artifactId>
-            <version>3.3.0</version>
+            <version>95dc72444b</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
