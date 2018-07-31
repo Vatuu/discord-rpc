@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
- * @version 1.6.0
+ * @version 1.5.1
  *
  * Object containing references to all event handlers registered. No callbacks are necessary,
  * every event handler is optional. Non-assigned handlers are being ignored.

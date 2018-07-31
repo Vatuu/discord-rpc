@@ -7,7 +7,7 @@ import java.io.*;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
- * @version 1.6.0
+ * @version 1.5.1
  *
  * Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
  */
@@ -130,7 +130,7 @@ public final class DiscordRPC{
             homeDir = new File(System.getenv("TEMP"));
             boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
             finalPath = is64bit ? "/win-x64/" + name : "win-x86/" + name;
-            tempPath = homeDir + "/discord-rpc/" + name;
+            tempPath = homeDir + "\\discord-rpc\\" + name;
         } else {
             name = System.mapLibraryName("discord-rpc");
             homeDir = new File(System.getProperty("user.home"), ".discord-rpc");
@@ -140,7 +140,7 @@ public final class DiscordRPC{
 
         File f = new File(tempPath);
 
-        try(InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = new FileOutputStream(f)){
+        try(InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = openOutputStream(f)){
             copyFile(in, out);
             f.deleteOnExit();
         } catch(IOException e){
@@ -196,11 +196,32 @@ public final class DiscordRPC{
         void Discord_Respond(String userId, int reply);
     }
 
+    //------------------------ Taken from apache commons ------------------------------
+
     private static void copyFile(final InputStream input, final OutputStream output) throws IOException{
         byte[] buffer = new byte[1024 * 4];
         int n;
         while( -1 != (n = input.read(buffer))){
             output.write(buffer, 0, n);
         }
+    }
+
+    private static FileOutputStream openOutputStream(final File file) throws IOException {
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                throw new IOException("File '" + file + "' exists but is a directory");
+            }
+            if (!file.canWrite()) {
+                throw new IOException("File '" + file + "' cannot be written to");
+            }
+        } else {
+            final File parent = file.getParentFile();
+            if (parent != null) {
+                if (!parent.mkdirs() && !parent.isDirectory()) {
+                    throw new IOException("Directory '" + parent + "' could not be created");
+                }
+            }
+        }
+        return new FileOutputStream(file);
     }
 }

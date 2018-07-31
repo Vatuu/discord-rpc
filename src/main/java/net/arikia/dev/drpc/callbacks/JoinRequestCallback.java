@@ -5,7 +5,7 @@ import net.arikia.dev.drpc.DiscordUser;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
- * @version 1.5.0
+ * @version 1.5.1
  *
  * Interface to be implemented in classes that will be registered as "JoinRequestCallback" Event Handler.
  * @see net.arikia.dev.drpc.DiscordEventHandlers

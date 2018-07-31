@@ -4,7 +4,7 @@ import com.sun.jna.Callback;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
- * @version 1.5.0
+ * @version 1.5.1
  *
  * Interface to be implemented in classes that will be registered as "DisconnectedCallback" Event Handler.
  * @see net.arikia.dev.drpc.DiscordEventHandlers
