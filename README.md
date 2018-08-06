@@ -57,7 +57,7 @@ public static class ReadyEvent implements ReadyCallback{
   
 public class MainClass{
   public void startup(){
-    DiscordEventHandler handler = new DiscordEventHandler.Build().setReadyEventHandler((user) -> {
+    DiscordEventHandlers handlers = new DiscordEventHandler.Build().setReadyEventHandler((user) -> {
         System.out.println("Welcome " + user.username + "#" + user.discriminator + "!");
     }).build();
   }
@@ -70,7 +70,7 @@ simply pass an empty DiscordEventHandler Object.*
 To summarize:
 ```java 
 public void startup(){
-  DiscordEventHandler handler = new DiscordEventHandler.Build().setReadyEventHandler((user) -> {
+  DiscordEventHandlers handlers = new DiscordEventHandler.Build().setReadyEventHandler((user) -> {
       System.out.println("Welcome " + user.username + "#" + user.discriminator + "!");
   }).build();
   DiscordRPC.initialize("1234567890", handler, true);
