@@ -8,6 +8,8 @@ Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
 Ever wanted to use the Discord Rich Presence API in a Java Application, but then realized that the native version is C++ only?
 Well, worry no more, because Vatuu's Discord RPC is here. A complete wrapper of all functions the native Dynamic Library contains.
 
+***Important Note:*** **The examples the documentation (that of discord) show DONT work.**
+
 ## Features
 Set advanced pieces of information about your game in the players' profile, when they use your Application, from text to images, timers and even giving the option of joining/spectating a game!
 
@@ -116,14 +118,14 @@ exit of your application, otherwise issues might occure.
 ## Joining and Spectating
 The method ``DiscordRPC.discordRespond(String userId, DiscordReply reply);`` handles the reply on a JoinRequest by a player.
 When a player requests to join a game, the ``JoinRequestCallback`` is called, which should be used to process the request. That request contains the Username, UserID and
-the avatar of that user transformed into a SHA-1 hash.
+the avatar of that user transformed into a SHA-1 hash.<br>
+But when a player requests to spectate a game, the ``SpectateGameCallback`` is called for the client that will spectate, which should be used to spectate someone elses game. That request contains the spectateSecret.
 
 ***Important Note:*** **To let a application use the Join and Spectate Feature, the application has to be greenlit by the Discord Developers.
-Otherwise, only certain users added to the Application will be able to use these features.**
+Also, for it to work you need the partyId and joinSecret (for Joining) and/or the spectateSecret (for Spectating) to be set .
+Otherwise, if you are not greenlit only certain users added to the Application will be able to use these features.**
 
 For further information regarding joining, spectating and getting greenlit, please visit [THIS PAGE](https://discordapp.com/developers/docs/rich-presence/how-to#joining "Discord Developer Docs").
-
-~~ *More will be added soon* ~~
 
 ## The Example Application
 Contained in this repository is a .JAR file called ``RPCTest.jar``. This simple command line application can be used to test the Rich Presence
