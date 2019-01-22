@@ -118,7 +118,7 @@ The method ``DiscordRPC.discordRespond(String userId, DiscordReply reply);`` han
 When a player requests to join a game, the ``JoinRequestCallback`` is called, which should be used to process the request. That request contains the Username, UserID and
 the avatar of that user transformed into a SHA-1 hash.
 
-***Important Note:*** **To let a application use the Join and Spectate Feature, the application has to be greenlit by the Discord Developers.
+***Important Note:*** **To let a application use the Spectate Feature, the application has to be greenlit by the Discord Developers.
 Otherwise, only certain users added to the Application will be able to use these features.**
 
 For further information regarding joining, spectating and getting greenlit, please visit [THIS PAGE](https://discordapp.com/developers/docs/rich-presence/how-to#joining "Discord Developer Docs").
