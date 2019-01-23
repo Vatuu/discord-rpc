@@ -1,7 +1,7 @@
 package net.arikia.dev.drpc;
 
 /**
- * @author Dejay
+ * @author DeJay
  * @version 1.5.1
  *
  * Object containing utils for detecting the user's OS.

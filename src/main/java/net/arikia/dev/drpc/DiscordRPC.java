@@ -11,7 +11,7 @@ import java.io.*;
  *
  * Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
  */
-public final class DiscordRPC{
+public final class DiscordRPC {
 
     static { loadDLL(); }
 
@@ -84,6 +84,7 @@ public final class DiscordRPC{
      */
     public static void discordRunCallbacks(){
         DLL.INSTANCE.Discord_RunCallbacks();
+        System.out.println("lib: ran callbacks");
     }
 
     /**
@@ -182,8 +183,8 @@ public final class DiscordRPC{
     }
 
     //JNA Interface
-    private interface DLL extends Library{
-        DLL INSTANCE = (DLL) Native.loadLibrary("discord-rpc", DLL.class);
+    private interface DLL extends Library {
+        DLL INSTANCE = Native.load("discord-rpc", DLL.class);
 
         void Discord_Initialize(String applicationId, DiscordEventHandlers handlers, int autoRegister, String optionalSteamId);
         void Discord_Register(String applicationId, String command);
