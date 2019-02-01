@@ -133,7 +133,6 @@ public final class DiscordRPC{
     private static boolean loadDLL(){
         String name = System.mapLibraryName("discord-rpc");
         File homeDir;
-        String finalPath;
         String tempPath;
         String dir;
 
@@ -151,27 +150,25 @@ public final class DiscordRPC{
             dir = "linux";
             tempPath = homeDir + File.separator + name;
         }
-        finalPath = "/" + dir + "/" + name;
+        String finalPath = "/" + dir + "/" + name;
 
         return loadLib(finalPath, new File(tempPath));
     }
 
     //Load DLL depending on the user's architecture.
     private static boolean loadDLL(File tempPath){
-        String name;
-        String finalPath;
+        String name = System.mapLibraryName("discord-rpc");
+        String dir;
 
         if (OSUtil.isMac()) {
-            name = System.mapLibraryName("discord-rpc");
-            finalPath = "/darwin/" + name;
+            dir = "darwin";
         } else if (OSUtil.isWindows()) {
-            name = System.mapLibraryName("discord-rpc");
             boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
-            finalPath = is64bit ? "/win-x64/" + name : "win-x86/" + name;
+            dir = (is64bit ? "win-x64" : "win-x86");
         } else {
-            name = System.mapLibraryName("discord-rpc");
-            finalPath = "/linux/" + name;
+            dir = "linux";
         }
+        String finalPath = "/" + dir + "/" + name;
 
         return loadLib(finalPath, new File(tempPath, name));
     }
