@@ -13,10 +13,9 @@ import java.io.*;
  */
 public final class DiscordRPC{
 
-    static { loadDLL(); }
-
     //DLL-Version for Update Check (soon).
     private static final String DLL_VERSION = "3.3.0";
+    private static boolean isInitialized = false;
 
     /**
      * Method to initialize the Discord-RPC.
@@ -25,18 +24,7 @@ public final class DiscordRPC{
      * @param autoRegister  AutoRegister
      */
     public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister){
-        DLL.INSTANCE.Discord_Initialize(applicationId, handlers, autoRegister ? 1 : 0, null);
-    }
-
-    /**
-     * Method to register the executable of the application/game.
-     * Only applicable when autoRegister in discordInitialize is false.
-     *
-     * @param applicationId ApplicationID/ClientID
-     * @param command Launch Command of the application/game.
-     */
-    public static void discordRegister(String applicationId, String command){
-        DLL.INSTANCE.Discord_Register(applicationId, command);
+    	discordInitialize(applicationId, handlers, autoRegister, null, null);
     }
 
     /**
@@ -48,7 +36,35 @@ public final class DiscordRPC{
      * @param steamId       SteamAppID
      */
     public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister, String steamId){
+        discordInitialize(applicationId, handlers, autoRegister, steamId, null);
+    }
+
+    /**
+     * Method to initialize the Discord-RPC within a Steam Application.
+     * @param applicationId ApplicationID/ClientID
+     * @param handlers      EventHandlers
+     *                      @see DiscordEventHandlers
+     * @param autoRegister  AutoRegister
+     * @param steamId       SteamAppID
+     */
+    public static void discordInitialize(String applicationId, DiscordEventHandlers handlers, boolean autoRegister, String steamId, File dllUnpackPath){
+        if (dllUnpackPath == null) {
+            isInitialized = loadDLL();
+        } else {
+            isInitialized = loadDLL(dllUnpackPath);
+        }
         DLL.INSTANCE.Discord_Initialize(applicationId, handlers, autoRegister ? 1 : 0, steamId);
+    }
+
+    /**
+     * Method to register the executable of the application/game.
+     * Only applicable when autoRegister in discordInitialize is false.
+     *
+     * @param applicationId ApplicationID/ClientID
+     * @param command Launch Command of the application/game.
+     */
+    public static void discordRegister(String applicationId, String command){
+        DLL.INSTANCE.Discord_Register(applicationId, command);
     }
 
     /**
@@ -114,10 +130,9 @@ public final class DiscordRPC{
     }
 
     //Load DLL depending on the user's architecture.
-    private static void loadDLL(){
+    private static boolean loadDLL(){
         String name = System.mapLibraryName("discord-rpc");
         File homeDir;
-        String finalPath;
         String tempPath;
         String dir;
 
@@ -135,19 +150,39 @@ public final class DiscordRPC{
             dir = "linux";
             tempPath = homeDir + File.separator + name;
         }
+        String finalPath = "/" + dir + "/" + name;
 
-        finalPath = "/" + dir + "/" + name;
+        return loadLib(finalPath, new File(tempPath));
+    }
 
-        File f = new File(tempPath);
+    //Load DLL depending on the user's architecture.
+    private static boolean loadDLL(File tempPath){
+        String name = System.mapLibraryName("discord-rpc");
+        String dir;
 
-        try(InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = openOutputStream(f)){
+        if (OSUtil.isMac()) {
+            dir = "darwin";
+        } else if (OSUtil.isWindows()) {
+            boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
+            dir = (is64bit ? "win-x64" : "win-x86");
+        } else {
+            dir = "linux";
+        }
+        String finalPath = "/" + dir + "/" + name;
+
+        return loadLib(finalPath, new File(tempPath, name));
+    }
+
+    private static boolean loadLib(String source, File target) {
+        try(InputStream in = DiscordRPC.class.getResourceAsStream(source); OutputStream out = openOutputStream(target)){
             copyFile(in, out);
-            f.deleteOnExit();
+            target.deleteOnExit();
         } catch(IOException e){
             e.printStackTrace();
         }
 
-        System.load(f.getAbsolutePath());
+        System.load(target.getAbsolutePath());
+        return true;
     }
 
     /**
