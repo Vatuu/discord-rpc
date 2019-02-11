@@ -16,7 +16,7 @@ public final class DiscordRPC {
     static { loadDLL(); }
 
     //DLL-Version for Update Check (soon).
-    private static final String DLL_VERSION = "3.3.0";
+    private static final String DLL_VERSION = "3.4.0";
 
     /**
      * Method to initialize the Discord-RPC.
@@ -84,7 +84,6 @@ public final class DiscordRPC {
      */
     public static void discordRunCallbacks(){
         DLL.INSTANCE.Discord_RunCallbacks();
-        System.out.println("lib: ran callbacks");
     }
 
     /**

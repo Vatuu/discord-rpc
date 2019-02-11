@@ -12,7 +12,9 @@ public class Main {
 
     private static boolean ready = false;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
         JFrame frame = new JFrame("Test");
         JLabel text = new JLabel("Now goto Discord and set your active game to: '" + frame.getTitle() + "'");
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -26,6 +28,7 @@ public class Main {
         frame.setResizable(true);
         frame.setSize(width/4, height/4);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         frame.setVisible(true);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -39,12 +42,10 @@ public class Main {
         System.out.println("Running callbacks...");
 
         while (true) {
-            System.out.println("lol debug.");
             DiscordRPC.discordRunCallbacks();
-            System.out.println("callbacks ran.");
 
-            //if(!ready)
-            //    continue;
+            if(!ready)
+                continue;
 
             System.out.print("> ");
             Scanner in = new Scanner(System.in);
@@ -53,7 +54,6 @@ public class Main {
             if (!input.equalsIgnoreCase("shutdown")) {
                 if (input.equalsIgnoreCase("test")) {
                     score++;
-                    System.out.println("New Score: " + score);
                     DiscordRichPresence.Builder presence = new DiscordRichPresence.Builder("Score: ");
                     presence.setDetails("Running Test");
                     DiscordRPC.discordUpdatePresence(presence.build());
@@ -70,9 +70,7 @@ public class Main {
     }
 
     private static void initDiscord() {
-        System.out.println("Discord Init: Begin");
         DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
-            System.out.println("Discord Init: Created Event Handler");
             Main.ready = true;
             System.out.println("Welcome " + user.username + "#" + user.discriminator + ".");
             DiscordRichPresence.Builder presence = new DiscordRichPresence.Builder("Score: ");

@@ -59,9 +59,7 @@ public class DiscordEventHandlers extends Structure {
         }
 
         public Builder setReadyEventHandler(ReadyCallback r){
-            System.out.println("lib: setReadyEventHandler");
             h.ready = r;
-            System.out.println("lib: define ReadyEventHandler");
             return this;
         }
 

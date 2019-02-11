@@ -69,7 +69,7 @@
                             <goal>unpack-dependencies</goal>
                         </goals>
                         <configuration>
-                            <includeGroupIds>com.github.Vatuu</includeGroupIds>
+                            <includeGroupIds>net.arikia.dev</includeGroupIds>
                             <includeArtifactIds>discord-rpc-binaries</includeArtifactIds>
                             <outputDirectory>${project.build.directory}/binaries-resources</outputDirectory>
                             <overWriteReleases>true</overWriteReleases>
