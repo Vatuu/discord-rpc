@@ -115,28 +115,28 @@ public final class DiscordRPC {
 
     //Load DLL depending on the user's architecture.
     private static void loadDLL(){
-        String name;
+        String name = System.mapLibraryName("discord-rpc");
         File homeDir;
         String finalPath;
         String tempPath;
+        String dir;
 
         if (OSUtil.isMac()) {
-            name = System.mapLibraryName("discord-rpc");
-            homeDir = new File(System.getProperty("user.home") + "/Library/Application Support/");
-            finalPath = "/darwin/" + name;
-            tempPath = homeDir + "/discord-rpc/" + name;
+            homeDir = new File(System.getProperty("user.home") + File.separator + "Library" + File.separator + "Application Support" + File.separator);
+            dir = "darwin";
+            tempPath = homeDir + File.separator + "discord-rpc" + File.separator + name;
         } else if (OSUtil.isWindows()) {
-            name = System.mapLibraryName("discord-rpc");
             homeDir = new File(System.getenv("TEMP"));
             boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
-            finalPath = is64bit ? "/win-x64/" + name : "win-x86/" + name;
-            tempPath = homeDir + "\\discord-rpc\\" + name;
+            dir = (is64bit ? "win-x64" : "win-x86");
+            tempPath = homeDir + File.separator + "discord-rpc" + File.separator + name;
         } else {
-            name = System.mapLibraryName("discord-rpc");
             homeDir = new File(System.getProperty("user.home"), ".discord-rpc");
-            finalPath = "/linux/" + name;
-            tempPath = homeDir + "/" + name;
+            dir = "linux";
+            tempPath = homeDir + File.separator + name;
         }
+
+        finalPath = "/" + dir + "/" + name;
 
         File f = new File(tempPath);
 
