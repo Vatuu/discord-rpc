@@ -54,7 +54,7 @@
         <dependency>
             <groupId>net.arikia.dev</groupId>
             <artifactId>discord-rpc</artifactId>
-            <version>1.6.0</version>
+            <version>LATEST</version>
         </dependency>
     </dependencies>
 </project>
