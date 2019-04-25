@@ -194,7 +194,6 @@ public final class DiscordRPC {
 	 * @see net.arikia.dev.drpc.callbacks.JoinRequestCallback
 	 */
 	public enum DiscordReply {
-
 		/**
 		 * Denies the join request immediately.
 		 * Currently behaving the same way like DiscordReply.IGNORE.
@@ -227,21 +226,13 @@ public final class DiscordRPC {
 		DLL INSTANCE = Native.loadLibrary("discord-rpc", DLL.class);
 
 		void Discord_Initialize(String applicationId, DiscordEventHandlers handlers, int autoRegister, String optionalSteamId);
-
 		void Discord_Register(String applicationId, String command);
-
 		void Discord_RegisterSteamGame(String applicationId, String steamId);
-
 		void Discord_UpdateHandlers(DiscordEventHandlers handlers);
-
 		void Discord_Shutdown();
-
 		void Discord_RunCallbacks();
-
 		void Discord_UpdatePresence(DiscordRichPresence presence);
-
 		void Discord_ClearPresence();
-
 		void Discord_Respond(String userId, int reply);
 	}
 }
