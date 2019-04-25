@@ -2,13 +2,8 @@ package net.arikia.dev.drpc;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
-import sun.jvm.hotspot.debugger.windbg.DLL;
 
 import java.io.*;
-import java.util.Formatter;
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
