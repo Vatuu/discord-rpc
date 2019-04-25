@@ -2,8 +2,13 @@ package net.arikia.dev.drpc;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
+import sun.jvm.hotspot.debugger.windbg.DLL;
 
 import java.io.*;
+import java.util.Formatter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
@@ -17,6 +22,7 @@ public final class DiscordRPC {
 
     //DLL-Version for Update Check (soon).
     private static final String DLL_VERSION = "3.4.0";
+    private static final String LIB_VERSION = "1.6.2";
 
     /**
      * Method to initialize the Discord-RPC.
@@ -116,16 +122,17 @@ public final class DiscordRPC {
     //Load DLL depending on the user's architecture.
     private static void loadDLL(){
         String name = System.mapLibraryName("discord-rpc");
+        OSUtil osUtil = new OSUtil();
         File homeDir;
         String finalPath;
         String tempPath;
         String dir;
 
-        if (OSUtil.isMac()) {
+        if (osUtil.isMac()) {
             homeDir = new File(System.getProperty("user.home") + File.separator + "Library" + File.separator + "Application Support" + File.separator);
             dir = "darwin";
             tempPath = homeDir + File.separator + "discord-rpc" + File.separator + name;
-        } else if (OSUtil.isWindows()) {
+        } else if (osUtil.isWindows()) {
             homeDir = new File(System.getenv("TEMP"));
             boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
             dir = (is64bit ? "win-x64" : "win-x86");
@@ -183,7 +190,8 @@ public final class DiscordRPC {
 
     //JNA Interface
     private interface DLL extends Library {
-        DLL INSTANCE = Native.load("discord-rpc", DLL.class);
+        //DLL INSTANCE = Native.load("discord-rpc", DLL.class);
+        DLL INSTANCE = Native.loadLibrary("discord-rpc", DLL.class);
 
         void Discord_Initialize(String applicationId, DiscordEventHandlers handlers, int autoRegister, String optionalSteamId);
         void Discord_Register(String applicationId, String command);
@@ -196,9 +204,9 @@ public final class DiscordRPC {
         void Discord_Respond(String userId, int reply);
     }
 
-    //------------------------ Taken from apache commons ------------------------------
+    //------------------------ Taken from apache commons ------------------------------//
 
-    private static void copyFile(final InputStream input, final OutputStream output) throws IOException{
+    private static void copyFile(final InputStream input, final OutputStream output) throws IOException {
         byte[] buffer = new byte[1024 * 4];
         int n;
         while( -1 != (n = input.read(buffer))){

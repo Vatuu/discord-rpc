@@ -6,7 +6,7 @@
 
     <groupId>net.arikia.dev</groupId>
     <artifactId>RPCTest</artifactId>
-    <version>1.5.1</version>
+    <version>1.6.2</version>
 
     <build>
         <finalName>RPCTest</finalName>
@@ -54,7 +54,7 @@
         <dependency>
             <groupId>net.arikia.dev</groupId>
             <artifactId>discord-rpc</artifactId>
-            <version>LATEST</version>
+            <version>1.6.2</version>
         </dependency>
     </dependencies>
 </project>

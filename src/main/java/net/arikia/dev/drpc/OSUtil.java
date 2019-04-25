@@ -2,20 +2,24 @@ package net.arikia.dev.drpc;
 
 /**
  * @author DeJay
- * @version 1.5.1
+ * @version 1.6.1
  *
- * Object containing utils for detecting the user's OS.
+ * Class containing utils for detecting the user's OS.
  */
 public final class OSUtil {
 
-    public static boolean isMac() {
-        return System.getProperty("os.name").toLowerCase()
+    public boolean isMac() {
+        return getOS().toLowerCase()
                 .startsWith("mac");
     }
 
-    public static boolean isWindows() {
-        return System.getProperty("os.name").toLowerCase()
+    public boolean isWindows() {
+        return getOS().toLowerCase()
                 .startsWith("win");
+    }
+
+    public String getOS() {
+        return System.getProperty("os.name").toLowerCase();
     }
 
 }
