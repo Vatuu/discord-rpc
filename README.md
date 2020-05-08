@@ -73,7 +73,7 @@ public void startup(){
   DiscordEventHandlers handlers = new DiscordEventHandler.Build().setReadyEventHandler((user) -> {
       System.out.println("Welcome " + user.username + "#" + user.discriminator + "!");
   }).build();
-  DiscordRPC.initialize("1234567890", handler, true);
+  DiscordRPC.initialize("1234567890", handlers, true);
 }
 ```
   
