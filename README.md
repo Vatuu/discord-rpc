@@ -32,7 +32,7 @@ Using this wrapper is as simple as it can be, with barely any difference of the 
 
 ### Step 1
 Initialize the Discord RPC when your Application starts up. The Library is mostly static, so there is no need to create an Instance.
-The ``DiscordRPC.initialize();`` method takes 3 arguments to start.
+The ``DiscordRPC.discordInitialize();`` method takes 3 arguments to start.
 - ``Client ID`` is the ID of your Discord Application.
 - ``Handler`` is an instance of a DiscordEventHandler-Object. Callbacks to HandlerClasses are registered in there.
 - ``AutoRegister``does not really matter right now and is always ``true``.
@@ -57,7 +57,7 @@ public static class ReadyEvent implements ReadyCallback{
   
 public class MainClass{
   public void startup(){
-    DiscordEventHandlers handlers = new DiscordEventHandler.Build().setReadyEventHandler((user) -> {
+    DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
         System.out.println("Welcome " + user.username + "#" + user.discriminator + "!");
     }).build();
   }
@@ -70,7 +70,7 @@ simply pass an empty DiscordEventHandler Object.*
 To summarize:
 ```java 
 public void startup(){
-  DiscordEventHandlers handlers = new DiscordEventHandler.Build().setReadyEventHandler((user) -> {
+  DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
       System.out.println("Welcome " + user.username + "#" + user.discriminator + "!");
   }).build();
   DiscordRPC.initialize("1234567890", handlers, true);
