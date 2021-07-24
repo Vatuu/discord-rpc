@@ -125,34 +125,38 @@ public final class DiscordRPC {
 	private static void loadDLL() {
 		String name = System.mapLibraryName("discord-rpc");
 		OSUtil osUtil = new OSUtil();
+		File homeDir;
 		String finalPath;
+		String tempPath;
 		String dir;
 
 		if (osUtil.isMac()) {
+			homeDir = new File(System.getProperty("user.home") + File.separator + "Library" + File.separator + "Application Support" + File.separator);
 			dir = "darwin";
+			tempPath = homeDir + File.separator + "discord-rpc" + File.separator + name;
 		} else if (osUtil.isWindows()) {
+			homeDir = new File(System.getenv("TEMP"));
 			boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
 			dir = (is64bit ? "win-x64" : "win-x86");
+			tempPath = homeDir + File.separator + "discord-rpc" + File.separator + name;
 		} else {
+			homeDir = new File(System.getProperty("user.home"), ".discord-rpc");
 			dir = "linux";
+			tempPath = homeDir + File.separator + name;
 		}
 
 		finalPath = "/" + dir + "/" + name;
 
-		try {
-			File f = File.createTempFile("drpc", name);
+		File f = new File(tempPath);
 
-			try (InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = openOutputStream(f)) {
-				copyFile(in, out);
-				f.deleteOnExit();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			System.load(f.getAbsolutePath());
-		} catch(Exception e) {
+		try (InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = openOutputStream(f)) {
+			copyFile(in, out);
+			f.deleteOnExit();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		System.load(f.getAbsolutePath());
 	}
 
 	private static void copyFile(final InputStream input, final OutputStream output) throws IOException {
