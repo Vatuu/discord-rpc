@@ -139,10 +139,22 @@ public final class DiscordRPC {
 			boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
 			dir = (is64bit ? "win-x64" : "win-x86");
 			tempPath = homeDir + File.separator + "discord-rpc" + File.separator + name;
-		} else {
-			homeDir = new File(System.getProperty("user.home"), ".discord-rpc");
-			dir = "linux";
-			tempPath = homeDir + File.separator + name;
+		} else { //use createTempFile for Linux specifically, since it seems to break Windows support in *some* cases, noticed by me on my project. -Ceikry
+			finalPath = "/linux/" + name;
+			try {
+				File f = File.createTempFile("drpc", name);
+				try (InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = openOutputStream(f)) {
+					if(in == null) throw new FileNotFoundException("Native Linux .so library missing. Please open an issue. https://github.com/Vatuu/discord-rpc");
+					copyFile(in, out);
+					f.deleteOnExit();
+					System.load(f.getAbsolutePath());
+					return;
+				}
+			} catch (IOException e){
+				e.printStackTrace();
+				System.out.println("Fatal Discord RPC exception occurred. Discord RPC will be unavailable for this session.");
+				return;
+			}
 		}
 
 		finalPath = "/" + dir + "/" + name;
