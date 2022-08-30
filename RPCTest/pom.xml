@@ -6,14 +6,7 @@
 
     <groupId>net.arikia.dev</groupId>
     <artifactId>RPCTest</artifactId>
-    <version>1.5.1</version>
-
-    <!--repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories-->
+    <version>1.6.2</version>
 
     <build>
         <finalName>RPCTest</finalName>
@@ -21,7 +14,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -34,7 +27,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.1</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -43,13 +36,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.1.1</version>
                 <configuration>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>net.arikia.dev.drpctest.Main</mainClass>
+                            <mainClass>drpctest.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -61,7 +54,7 @@
         <dependency>
             <groupId>net.arikia.dev</groupId>
             <artifactId>discord-rpc</artifactId>
-            <version>1.6.0</version>
+            <version>LATEST</version>
         </dependency>
     </dependencies>
 </project>

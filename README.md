@@ -32,7 +32,7 @@ Using this wrapper is as simple as it can be, with barely any difference of the 
 
 ### Step 1
 Initialize the Discord RPC when your Application starts up. The Library is mostly static, so there is no need to create an Instance.
-The ``DiscordRPC.initialize();`` method takes 3 arguments to start.
+The ``DiscordRPC.discordInitialize();`` method takes 3 arguments to start.
 - ``Client ID`` is the ID of your Discord Application.
 - ``Handler`` is an instance of a DiscordEventHandler-Object. Callbacks to HandlerClasses are registered in there.
 - ``AutoRegister``does not really matter right now and is always ``true``.
@@ -49,15 +49,15 @@ the appropriate Interface for the Callback. The Callback-Interfaces are the foll
   
 To register a Callback, simply follow the following code:
 ```java
-public static class ReadyEvent implements ReadyCallback{
-  public void apply(){
+public static class ReadyEvent implements ReadyCallback {
+  public void apply() {
     System.out.println("Discord's ready!");
   }
 }
   
-public class MainClass{
-  public void startup(){
-    DiscordEventHandlers handlers = new DiscordEventHandler.Build().setReadyEventHandler((user) -> {
+public class MainClass {
+  public void startup() {
+    DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
         System.out.println("Welcome " + user.username + "#" + user.discriminator + "!");
     }).build();
   }
@@ -69,18 +69,18 @@ simply pass an empty DiscordEventHandler Object.*
   
 To summarize:
 ```java 
-public void startup(){
-  DiscordEventHandlers handlers = new DiscordEventHandler.Build().setReadyEventHandler((user) -> {
+public void startup() {
+  DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
       System.out.println("Welcome " + user.username + "#" + user.discriminator + "!");
   }).build();
-  DiscordRPC.initialize("1234567890", handler, true);
+  DiscordRPC.discordInitialize("1234567890", handlers, true);
 }
 ```
   
 This would result in the message "Welcome User#1234!" being printed out in the console after the connection to Discord has been established, and fitted with the users username and discriminator.
   
 ### Step 2
-To allow callbacks to be fired, you have to periodically call the method ``DiscordRPC.runCallbacks();``. Otherwise, no callbacks will be passed
+To allow callbacks to be fired, you have to periodically call the method ``DiscordRPC.discordRunCallbacks();``. Otherwise, no callbacks will be passed
 to the application.
   
 **Congratulations, your Application is ready to utilize the Rich Presence.**
@@ -90,16 +90,16 @@ to the application.
 To update the Rich Presence of a player, a ``DiscordRichPresence`` Object is required. There are created in the same way as the
 EventHandler is created, by using a Builder:
 ```java
-public void createNewPresence(){
+public void createNewPresence() {
   DiscordRichPresence rich = new DiscordRichPresence.Builder("This is the current state.").setDetails("These are some details.").build();
 }
 ```
-After the Object has been created, it simply has to be passed to the DiscordRPC with the methods ``DiscordRPC.updatePresence(DiscordRichPresence);``
+After the Object has been created, it simply has to be passed to the DiscordRPC with the methods ``DiscordRPC.discordUpdatePresence(DiscordRichPresence);``
 
 ```java
-public void createNewPresence(){
+public void createNewPresence() {
   DiscordRichPresence rich = new DiscordRichPresence.Builder("This is the current state.").setDetails("These are some details.").build();
-  DiscordRPC.updatePresence(rich);
+  DiscordRPC.discordUpdatePresence(rich);
 }
 ```
 
@@ -140,4 +140,3 @@ The RPCTest has only two commands:
 Vatuu   
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-7289DA.svg)](https://www.paypal.me/NicolasAdamoglou)
- 
