@@ -128,16 +128,36 @@ public final class DiscordRPC {
 	private static void loadDLL() {
 		String name = System.mapLibraryName("discord-rpc");
 		OSUtil osUtil = new OSUtil();
+		File homeDir;
 		String finalPath;
+		String tempPath;
 		String dir;
 
 		if (osUtil.isMac()) {
+			homeDir = new File(System.getProperty("user.home") + File.separator + "Library" + File.separator + "Application Support" + File.separator);
 			dir = "darwin";
+			tempPath = homeDir + File.separator + "discord-rpc" + File.separator + name;
 		} else if (osUtil.isWindows()) {
+			homeDir = new File(System.getenv("TEMP"));
 			boolean is64bit = System.getProperty("sun.arch.data.model").equals("64");
 			dir = (is64bit ? "win-x64" : "win-x86");
-		} else {
-			dir = "linux";
+			tempPath = homeDir + File.separator + "discord-rpc" + File.separator + name;
+		} else { //use createTempFile for Linux specifically, since it seems to break Windows support in *some* cases, noticed by me on my project. -Ceikry
+			finalPath = "/linux/" + name;
+			try {
+				File f = File.createTempFile("drpc", name);
+				try (InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = openOutputStream(f)) {
+					if(in == null) throw new FileNotFoundException("Native Linux .so library missing. Please open an issue. https://github.com/Vatuu/discord-rpc");
+					copyFile(in, out);
+					f.deleteOnExit();
+					System.load(f.getAbsolutePath());
+					return;
+				}
+			} catch (IOException e){
+				e.printStackTrace();
+				System.out.println("Fatal Discord RPC exception occurred. Discord RPC will be unavailable for this session.");
+				return;
+			}
 		}
 
 		finalPath = "/" + dir + "/" + name;
@@ -158,6 +178,8 @@ public final class DiscordRPC {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+
+		System.load(f.getAbsolutePath());
 	}
 
 	private static void copyFile(final InputStream input, final OutputStream output) throws IOException {
