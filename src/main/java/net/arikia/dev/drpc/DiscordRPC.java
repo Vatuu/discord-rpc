@@ -13,6 +13,7 @@ import java.nio.file.Path;
  * <p>
  * Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
  */
+
 public final class DiscordRPC {
 
 	//DLL-Version for Update Check (soon).
