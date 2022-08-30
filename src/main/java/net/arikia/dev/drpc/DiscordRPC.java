@@ -4,6 +4,8 @@ import com.sun.jna.Library;
 import com.sun.jna.Native;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * @author Nicolas "Vatuu" Adamoglou
@@ -11,6 +13,7 @@ import java.io.*;
  * <p>
  * Java Wrapper of the Discord-RPC Library for Discord Rich Presence.
  */
+
 public final class DiscordRPC {
 
 	//DLL-Version for Update Check (soon).
@@ -159,12 +162,20 @@ public final class DiscordRPC {
 
 		finalPath = "/" + dir + "/" + name;
 
-		File f = new File(tempPath);
+		try {
+			Path tempDirectoryPath = Files.createTempDirectory("drpc");
+			File f = new File(tempDirectoryPath + File.separator + name);
 
-		try (InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = openOutputStream(f)) {
-			copyFile(in, out);
-			f.deleteOnExit();
-		} catch (IOException e) {
+			try (InputStream in = DiscordRPC.class.getResourceAsStream(finalPath); OutputStream out = openOutputStream(f)) {
+				copyFile(in, out);
+				tempDirectoryPath.toFile().deleteOnExit();
+				f.deleteOnExit();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			System.load(f.getAbsolutePath());
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 
