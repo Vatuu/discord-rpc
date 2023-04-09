@@ -1,3 +1,9 @@
+# Important Notice
+
+This project is discontinued and will no longer be maintained as the DiscordRPC has been deprecated.
+It has been replaced by the GameSDK which has wrappers maintained by people unrelated to this project.
+Please stop using this library, and refrain from creating issues or PRs as they will likely not be resolved or merged.
+
 <img src="https://raw.githubusercontent.com/vatuu/discord-rpc/master/rpc.png" align="right" height="256" width="256"/>
 
 [![jitpack](https://jitpack.io/v/Vatuu/discord-rpc.svg)](https://jitpack.io/#Vatuu/discord-rpc) [![Build Status](https://travis-ci.org/Vatuu/discord-rpc.svg?branch=master)](https://travis-ci.org/Vatuu/discord-rpc) 
